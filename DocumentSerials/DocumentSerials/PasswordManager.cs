@@ -18,10 +18,7 @@ namespace DocumentSerials
         public PasswordManager()
         {
             Init();
-        }
-        //customize code here
-        //customization 00:03 by mario
-        //custom 00.16 by mario
+        }// so finally, when you modify, you need to do this
         private void Init()
         {
             InitializeComponent();
