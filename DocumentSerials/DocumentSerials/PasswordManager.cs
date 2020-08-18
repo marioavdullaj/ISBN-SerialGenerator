@@ -23,7 +23,8 @@ namespace DocumentSerials
         //do it , try
         //ok
         // no, first save, then commit, then commit changes, then sync
-        // you didn't tell me that, i always save with CTRL+S so you didnt see it :D
+        // you didn't tell me that, i always save with CTRL+S so you didnt see it :D+
+        //mod 00.25 by mario
         private void Init()
         {
             InitializeComponent();
