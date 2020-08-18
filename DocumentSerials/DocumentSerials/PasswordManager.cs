@@ -21,6 +21,7 @@ namespace DocumentSerials
         }
         //customize code here
         //customization 00:03 by mario
+        //custom 00.16 by mario
         private void Init()
         {
             InitializeComponent();
