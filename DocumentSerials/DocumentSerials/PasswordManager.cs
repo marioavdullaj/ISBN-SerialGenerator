@@ -20,6 +20,10 @@ namespace DocumentSerials
             Init();
         }// so finally, when you modify, you need to do this
         // hereherehererer 00.20
+        //do it , try
+        //ok
+        // no, first save, then commit, then commit changes, then sync
+        // you didn't tell me that, i always save with CTRL+S so you didnt see it :D
         private void Init()
         {
             InitializeComponent();
