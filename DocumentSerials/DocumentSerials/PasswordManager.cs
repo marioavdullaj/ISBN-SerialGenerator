@@ -53,20 +53,17 @@ namespace DocumentSerials
             else
                 dt = (DataTable)dataGridView1.DataSource;
 
-            int k = dt.Rows.Count + 1;
             dataGridView1.UseWaitCursor = true;
 
-            for (int i = 0; i < n; ++i)
+            for (int actual_rows = dt.Rows.Count, i = actual_rows + 1; i <= actual_rows + n; i++)
             {
-                //passwords.Add(sc.Generate(doc, duration));
                 psw = sc.Generate(doc, duration);
                 DataRow dr = dt.NewRow();
-                dr[0] = k.ToString();
+                dr[0] = i.ToString();
                 dr[1] = doc;
                 dr[2] = psw;
                 dt.Rows.Add(dr);
-                k++;
-                progressBar1.Value = i;
+                progressBar1.Value = i - actual_rows;
             }
             dataGridView1.DataSource = dt;
             dataGridView1.UseWaitCursor = false;
@@ -76,18 +73,31 @@ namespace DocumentSerials
         }
         public void button1_Click(object sender, EventArgs e)
         {
+
+            string documentNumber = textBox2.Text;
+            int duration = comboBox1.SelectedIndex + 1;
+            if (String.IsNullOrEmpty(documentNumber))
+            {
+                MessageBox.Show("You must specify the ISBN of the book to generate the codes");
+                return;
+            }
+
             int numberOfPasswords = 0;
             // validation of the fields
             try
             {
+
                 numberOfPasswords = Convert.ToInt32(textBox1.Text);
+                if (numberOfPasswords <= 0)
+                {
+                    MessageBox.Show("You must generate at least one password");
+                    return;
+                }
             }
-            catch(Exception ex)
+            catch(Exception _)
             {
                 MessageBox.Show("The number of passwords format is not valid, please insert a number");
             }
-            string documentNumber = textBox2.Text;
-            int duration = comboBox1.SelectedIndex + 1;
 
             generatePasswords(documentNumber, duration, numberOfPasswords);
         }

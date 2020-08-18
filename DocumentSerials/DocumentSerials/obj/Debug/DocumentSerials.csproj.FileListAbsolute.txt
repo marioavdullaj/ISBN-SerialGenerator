@@ -8,3 +8,13 @@ C:\Users\user\Documents\code\DocumentSerials\DocumentSerials\obj\Debug\DocumentS
 C:\Users\user\Documents\code\DocumentSerials\DocumentSerials\obj\Debug\DocumentSerials.exe
 C:\Users\user\Documents\code\DocumentSerials\DocumentSerials\obj\Debug\DocumentSerials.pdb
 C:\Users\user\Documents\code\DocumentSerials\DocumentSerials\obj\Debug\DocumentSerials.PasswordManager.resources
+C:\Users\user\Source\Repos\ISBN-SerialGenerator\DocumentSerials\DocumentSerials\bin\Debug\DocumentSerials.exe.config
+C:\Users\user\Source\Repos\ISBN-SerialGenerator\DocumentSerials\DocumentSerials\bin\Debug\DocumentSerials.exe
+C:\Users\user\Source\Repos\ISBN-SerialGenerator\DocumentSerials\DocumentSerials\bin\Debug\DocumentSerials.pdb
+C:\Users\user\Source\Repos\ISBN-SerialGenerator\DocumentSerials\DocumentSerials\obj\Debug\DocumentSerials.csprojAssemblyReference.cache
+C:\Users\user\Source\Repos\ISBN-SerialGenerator\DocumentSerials\DocumentSerials\obj\Debug\DocumentSerials.PasswordManager.resources
+C:\Users\user\Source\Repos\ISBN-SerialGenerator\DocumentSerials\DocumentSerials\obj\Debug\DocumentSerials.Properties.Resources.resources
+C:\Users\user\Source\Repos\ISBN-SerialGenerator\DocumentSerials\DocumentSerials\obj\Debug\DocumentSerials.csproj.GenerateResource.cache
+C:\Users\user\Source\Repos\ISBN-SerialGenerator\DocumentSerials\DocumentSerials\obj\Debug\DocumentSerials.csproj.CoreCompileInputs.cache
+C:\Users\user\Source\Repos\ISBN-SerialGenerator\DocumentSerials\DocumentSerials\obj\Debug\DocumentSerials.exe
+C:\Users\user\Source\Repos\ISBN-SerialGenerator\DocumentSerials\DocumentSerials\obj\Debug\DocumentSerials.pdb
