@@ -19,6 +19,7 @@ namespace DocumentSerials
         {
             Init();
         }// so finally, when you modify, you need to do this
+        // hereherehererer 00.20
         private void Init()
         {
             InitializeComponent();
