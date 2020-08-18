@@ -19,7 +19,7 @@ namespace DocumentSerials
         {
             Init();
         }
-
+        //customize code here
         private void Init()
         {
             InitializeComponent();
