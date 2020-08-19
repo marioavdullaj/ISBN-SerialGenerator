@@ -13,24 +13,13 @@ namespace DocumentSerials
         private SerialCode sc;
         public PasswordManager()
         {
-            
             Init();
-        }// so finally, when you modify, you need to do this
-        // hereherehererer 00.20
-        //do it , try
-        //ok
-        // no, first save, then commit, then commit changes, then sync
-        // you didn't tell me that, i always save with CTRL+S so you didnt see it :D+
-        //mod 00.25 by mario//ok
-        // now we can work in the same project, i can see you changes, you can see mine, and sync
-        //cool
-        // if i upload a project i do the same?
-        // no you need to create a new repository on github, clone it like you've seen before, and then it's the same
-        // but first in github
+            sc = new SerialCode();
+        }
+
         private void Init()
         {
             InitializeComponent();
-            sc = new SerialCode();
             
             // initialize combobox
             for (int i = 1; i <= 36; i++)
@@ -38,8 +27,6 @@ namespace DocumentSerials
                 comboBox1.Items.Add(i + " Months");
             }
             comboBox1.SelectedIndex = 0;
-            
-            
         }
 
 
@@ -81,42 +68,20 @@ namespace DocumentSerials
             stopWatch.Start();
             stopWatch.Stop();
 
-            
-            
-                TimeSpan ts = stopWatch.Elapsed;
-                txtTimer.Text = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
-                      ts.Hours, ts.Minutes, ts.Seconds,
-                      ts.Milliseconds / 10);
-                Thread.Sleep(0);
+            TimeSpan ts = stopWatch.Elapsed;
+            txtTimer.Text = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+                    ts.Hours, ts.Minutes, ts.Seconds,
+                    ts.Milliseconds / 10);
+            Thread.Sleep(0);
 
-                progressBar1.Value = 0;
-                label4.Text = Convert.ToString((int)((float)0 / (float)n * 100)) + "%";
+            progressBar1.Value = 0;
+            label4.Text = Convert.ToString((int)((float)0 / (float)n * 100)) + "%";
             
-
-            
-            
-
             return;
-
-
-
-
-
-
-
-
-
         }
 
         public void button1_Click(object sender, EventArgs e)
         {
-            
-
-        
-            
-            
-            
-
             string documentNumber = textBox2.Text;
             int duration = comboBox1.SelectedIndex + 1;
             if (String.IsNullOrEmpty(documentNumber))
@@ -143,10 +108,6 @@ namespace DocumentSerials
             }
 
             generatePasswords(documentNumber, duration, numberOfPasswords);
-
-            
-
-
         }
 
 
