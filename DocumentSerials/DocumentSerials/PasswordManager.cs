@@ -103,7 +103,7 @@ namespace DocumentSerials
         {
             using (SaveFileDialog dialog = new SaveFileDialog())
             {
-                dialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+                dialog.Filter = "csv files (*.csv)|*.csv|All files (*.*)|*.*";
                 dialog.FilterIndex = 2;
                 dialog.RestoreDirectory = true;
                 dialog.FileName = "SerialCodes_" + textBox2.Text +
