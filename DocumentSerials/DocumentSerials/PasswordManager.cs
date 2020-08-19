@@ -24,15 +24,18 @@ namespace DocumentSerials
         public PasswordManager()
         {
             Init();
-            sc = new SerialCode();
-            stopWatch = new Stopwatch();
-            db = new ServerDatabase();
         }
 
         private void Init()
         {
             InitializeComponent();
-            
+
+            // Initialize private components
+            sc = new SerialCode();
+            stopWatch = new Stopwatch();
+            db = new ServerDatabase();
+            Passwords = new List<string>() { };
+
             // initialize combobox
             for (int i = 1; i <= 36; i++)
             {
@@ -88,9 +91,6 @@ namespace DocumentSerials
             txtTimer.Text = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
                     ts.Hours, ts.Minutes, ts.Seconds,
                     ts.Milliseconds / 10);
-
-            //progressBar1.Value = 0;
-            label4.Text = Convert.ToString((int)((float)0 / (float)n * 100)) + "%";
             
             return;
         }
@@ -160,13 +160,23 @@ namespace DocumentSerials
             if (dt != null)
                 dt.Clear();
             dataGridView1.DataSource = dt;
+            Passwords.Clear();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
+            if(ISBN.Equals(String.Empty) || Passwords.Count <= 0)
+            {
+                MessageBox.Show("Insert ISBN and generate serials first");
+                return;
+            }
+             
             bool res = db.Insert(ISBN, Passwords);
             if (res)
+            {
                 MessageBox.Show("Serial codes inserted correctly");
+                Passwords.Clear();
+            }
             else
                 MessageBox.Show("Error during the insertion of the serial codes");
         }

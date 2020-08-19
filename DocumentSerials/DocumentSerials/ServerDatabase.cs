@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -98,17 +99,31 @@ namespace DocumentSerials
         public bool Insert(string ISBN, List<string> passwords)
         {
             int result = -1;
-            string query = "INSERT INTO activation_code (ISBN, password) VALUES ";
-            foreach (string psw in passwords)
-                query += "('" + ISBN + "', '" + psw + "'),";
-            query = query.Substring(0, query.Length - 1);
+            StringBuilder queryBuilder = new StringBuilder();
+
+            queryBuilder.Append("INSERT INTO activation_code (ISBN, password) VALUES ");
+
+            for(var i = 0; i < passwords.Count; i++)
+            {
+                string psw = passwords[i];
+                string separator = (i < passwords.Count - 1) ? "," : "";
+                queryBuilder.Append("('" + ISBN + "', '" + psw + "')"+separator);
+            }
 
             if (this.OpenConnection())
             {
-                MySqlCommand cmd = new MySqlCommand(query, Connector);
+                try
+                {
+                    string query = queryBuilder.ToString();
+                    MySqlCommand cmd = new MySqlCommand(query, Connector);
 
-                result = cmd.ExecuteNonQuery();
-                this.CloseConnection();
+                    result = cmd.ExecuteNonQuery();
+                    this.CloseConnection();
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
 
             return (result == passwords.Count);

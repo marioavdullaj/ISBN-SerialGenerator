@@ -37,7 +37,6 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
             this.txtTimer = new System.Windows.Forms.TextBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.exportButton = new System.Windows.Forms.Button();
@@ -134,7 +133,6 @@
             // 
             this.panel5.BackColor = System.Drawing.Color.WhiteSmoke;
             this.panel5.Controls.Add(this.button2);
-            this.panel5.Controls.Add(this.label4);
             this.panel5.Controls.Add(this.txtTimer);
             this.panel5.Controls.Add(this.progressBar1);
             this.panel5.Controls.Add(this.exportButton);
@@ -146,14 +144,6 @@
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(685, 98);
             this.panel5.TabIndex = 7;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(281, 9);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(0, 17);
-            this.label4.TabIndex = 12;
             // 
             // txtTimer
             // 
@@ -399,7 +389,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Document;
         private System.Windows.Forms.DataGridViewTextBoxColumn Password;
         private System.Windows.Forms.TextBox txtTimer;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button2;
     }
 }
