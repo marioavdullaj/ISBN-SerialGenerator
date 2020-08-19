@@ -96,19 +96,23 @@ namespace DocumentSerials
             }
         }
 
-        public bool Insert(string ISBN, List<string> passwords)
+        public bool Insert(Dictionary<string, List<Tuple<string, int>>> passwords)
         {
             int result = -1;
             StringBuilder queryBuilder = new StringBuilder();
 
             queryBuilder.Append("INSERT INTO activation_code (ISBN, password) VALUES ");
 
-            for(var i = 0; i < passwords.Count; i++)
+            foreach (string ISBN in passwords.Keys)
             {
-                string psw = passwords[i];
-                string separator = (i < passwords.Count - 1) ? "," : "";
-                queryBuilder.Append("('" + ISBN + "', '" + psw + "')"+separator);
+                foreach(var item in passwords[ISBN])
+                {
+                    string psw = item.Item1;
+                    int duration = Convert.ToInt32(item.Item2);
+                    queryBuilder.Append("('" + ISBN + "', '" + psw + "', "+duration.ToString()+"),");
+                }
             }
+            queryBuilder = queryBuilder.Remove(queryBuilder.Length - 1, 1);
 
             if (this.OpenConnection())
             {

@@ -37,16 +37,14 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.exportDbButton = new System.Windows.Forms.Button();
             this.txtTimer = new System.Windows.Forms.TextBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.exportButton = new System.Windows.Forms.Button();
             this.generateButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.clearAllButton = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.N = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Document = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel3 = new System.Windows.Forms.Panel();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -54,7 +52,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.N = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Document = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Duration = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -132,12 +133,12 @@
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.panel5.Controls.Add(this.button2);
+            this.panel5.Controls.Add(this.exportDbButton);
             this.panel5.Controls.Add(this.txtTimer);
             this.panel5.Controls.Add(this.progressBar1);
             this.panel5.Controls.Add(this.exportButton);
             this.panel5.Controls.Add(this.generateButton);
-            this.panel5.Controls.Add(this.button1);
+            this.panel5.Controls.Add(this.clearAllButton);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel5.Location = new System.Drawing.Point(3, 546);
             this.panel5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -145,9 +146,19 @@
             this.panel5.Size = new System.Drawing.Size(685, 98);
             this.panel5.TabIndex = 7;
             // 
+            // exportDbButton
+            // 
+            this.exportDbButton.Location = new System.Drawing.Point(130, 49);
+            this.exportDbButton.Name = "exportDbButton";
+            this.exportDbButton.Size = new System.Drawing.Size(128, 42);
+            this.exportDbButton.TabIndex = 13;
+            this.exportDbButton.Text = "Export to DB";
+            this.exportDbButton.UseVisualStyleBackColor = true;
+            this.exportDbButton.Click += new System.EventHandler(this.exportDbButton_Click);
+            // 
             // txtTimer
             // 
-            this.txtTimer.Location = new System.Drawing.Point(590, 6);
+            this.txtTimer.Location = new System.Drawing.Point(590, 5);
             this.txtTimer.Margin = new System.Windows.Forms.Padding(4);
             this.txtTimer.Name = "txtTimer";
             this.txtTimer.Size = new System.Drawing.Size(88, 22);
@@ -181,18 +192,18 @@
             this.generateButton.TabIndex = 3;
             this.generateButton.Text = "Generate";
             this.generateButton.UseVisualStyleBackColor = true;
-            this.generateButton.Click += new System.EventHandler(this.button1_Click);
+            this.generateButton.Click += new System.EventHandler(this.generateButton_Click);
             // 
-            // button1
+            // clearAllButton
             // 
-            this.button1.Location = new System.Drawing.Point(557, 49);
-            this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(127, 43);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "Clear All";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            this.clearAllButton.Location = new System.Drawing.Point(557, 49);
+            this.clearAllButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.clearAllButton.Name = "clearAllButton";
+            this.clearAllButton.Size = new System.Drawing.Size(127, 43);
+            this.clearAllButton.TabIndex = 6;
+            this.clearAllButton.Text = "Clear All";
+            this.clearAllButton.UseVisualStyleBackColor = true;
+            this.clearAllButton.Click += new System.EventHandler(this.clearAllButton_Click);
             // 
             // panel4
             // 
@@ -215,7 +226,8 @@
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.N,
             this.Document,
-            this.Password});
+            this.Password,
+            this.Duration});
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -225,33 +237,6 @@
             this.dataGridView1.RowTemplate.Height = 28;
             this.dataGridView1.Size = new System.Drawing.Size(685, 401);
             this.dataGridView1.TabIndex = 0;
-            // 
-            // N
-            // 
-            this.N.DataPropertyName = "#";
-            this.N.HeaderText = "#";
-            this.N.MinimumWidth = 6;
-            this.N.Name = "N";
-            this.N.ReadOnly = true;
-            this.N.Width = 50;
-            // 
-            // Document
-            // 
-            this.Document.DataPropertyName = "Document";
-            this.Document.HeaderText = "ISBN";
-            this.Document.MinimumWidth = 8;
-            this.Document.Name = "Document";
-            this.Document.ReadOnly = true;
-            this.Document.Width = 125;
-            // 
-            // Password
-            // 
-            this.Password.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Password.DataPropertyName = "Password";
-            this.Password.HeaderText = "Password";
-            this.Password.MinimumWidth = 8;
-            this.Password.Name = "Password";
-            this.Password.ReadOnly = true;
             // 
             // panel3
             // 
@@ -323,15 +308,41 @@
             this.textBox2.Size = new System.Drawing.Size(368, 22);
             this.textBox2.TabIndex = 2;
             // 
-            // button2
+            // N
             // 
-            this.button2.Location = new System.Drawing.Point(130, 49);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(128, 42);
-            this.button2.TabIndex = 13;
-            this.button2.Text = "Export to DB";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.N.DataPropertyName = "#";
+            this.N.HeaderText = "#";
+            this.N.MinimumWidth = 6;
+            this.N.Name = "N";
+            this.N.ReadOnly = true;
+            this.N.Width = 25;
+            // 
+            // Document
+            // 
+            this.Document.DataPropertyName = "Document";
+            this.Document.HeaderText = "ISBN";
+            this.Document.MinimumWidth = 8;
+            this.Document.Name = "Document";
+            this.Document.ReadOnly = true;
+            this.Document.Width = 125;
+            // 
+            // Password
+            // 
+            this.Password.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Password.DataPropertyName = "Password";
+            this.Password.HeaderText = "Password";
+            this.Password.MinimumWidth = 8;
+            this.Password.Name = "Password";
+            this.Password.ReadOnly = true;
+            // 
+            // Duration
+            // 
+            this.Duration.DataPropertyName = "Duration";
+            this.Duration.HeaderText = "Duration (Months)";
+            this.Duration.MinimumWidth = 6;
+            this.Duration.Name = "Duration";
+            this.Duration.ReadOnly = true;
+            this.Duration.Width = 125;
             // 
             // PasswordManager
             // 
@@ -379,17 +390,18 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button exportButton;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button clearAllButton;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.TextBox txtTimer;
+        private System.Windows.Forms.Button exportDbButton;
         private System.Windows.Forms.DataGridViewTextBoxColumn N;
         private System.Windows.Forms.DataGridViewTextBoxColumn Document;
         private System.Windows.Forms.DataGridViewTextBoxColumn Password;
-        private System.Windows.Forms.TextBox txtTimer;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Duration;
     }
 }
 

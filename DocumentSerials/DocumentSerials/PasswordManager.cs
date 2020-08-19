@@ -8,6 +8,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Renci.SshNet.Messages;
 using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Win32;
 
 namespace DocumentSerials
 {
@@ -17,9 +19,7 @@ namespace DocumentSerials
         private Stopwatch stopWatch;
         private ServerDatabase db;
 
-        private string ISBN { get; set; }
-        private int Duration { get; set; }
-        private List<string> Passwords { get; set; }
+        private Dictionary<string, List<Tuple<string, int>>> Passwords { get; set; }
 
         public PasswordManager()
         {
@@ -34,7 +34,7 @@ namespace DocumentSerials
             sc = new SerialCode();
             stopWatch = new Stopwatch();
             db = new ServerDatabase();
-            Passwords = new List<string>() { };
+            Passwords = new Dictionary<string, List<Tuple<string, int>>>() { };
 
             // initialize combobox
             for (int i = 1; i <= 36; i++)
@@ -61,22 +61,26 @@ namespace DocumentSerials
                 dt.Columns.Add("#");
                 dt.Columns.Add("Document");
                 dt.Columns.Add("Password");
+                dt.Columns.Add("Duration");
             }
             else
                 dt = (DataTable)dataGridView1.DataSource;
 
             dataGridView1.UseWaitCursor = true;
-            
+
+            if (!Passwords.ContainsKey(doc))
+                Passwords.Add(doc, new List<Tuple<string, int>>());
+
             for (int actual_rows = dt.Rows.Count, i = actual_rows + 1; i <= actual_rows + n; i++)
             {
                 psw = sc.Generate(doc, duration);
-                Passwords.Add(psw);
-
+                Passwords[doc].Add(new Tuple<string, int>(psw, duration));
                 // Update gridview
                 DataRow dr = dt.NewRow();
                 dr[0] = i.ToString();
                 dr[1] = doc;
                 dr[2] = psw;
+                dr[3] = duration.ToString();
                 dt.Rows.Add(dr);
                 // update progress bar
                 progressBar1.Value = i - actual_rows;
@@ -95,10 +99,86 @@ namespace DocumentSerials
             return;
         }
 
-        public void button1_Click(object sender, EventArgs e)
+        private void exportButton_Click(object sender, EventArgs e)
         {
-            ISBN = textBox2.Text;
-            Duration = comboBox1.SelectedIndex + 1;
+            using (SaveFileDialog dialog = new SaveFileDialog())
+            {
+                dialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+                dialog.FilterIndex = 2;
+                dialog.RestoreDirectory = true;
+                dialog.FileName = "SerialCodes_" + textBox2.Text +
+                    "-" + DateTime.Today.Day + "-" + DateTime.Today.Month + "-" + DateTime.Today.Year +
+                    ".csv";
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    // Can use dialog.FileName
+                    using (Stream stream = dialog.OpenFile())
+                    {   /*
+                        DataTable dt = (DataTable)dataGridView1.DataSource;
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            byte[] output = Encoding.UTF8.GetBytes(row[2].ToString() + "\n");
+                            stream.Write(output, 0, output.Length);
+                        }*/
+                        DataTable dt = (DataTable)dataGridView1.DataSource;
+                        if (dt != null)
+                        {
+                            StringBuilder sb = new StringBuilder();
+
+                            IEnumerable<string> columnNames = dt.Columns.Cast<DataColumn>().
+                                                              Select(column => column.ColumnName);
+                            sb.AppendLine(string.Join(",", columnNames));
+
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                IEnumerable<string> fields = row.ItemArray.Select(field => field.ToString());
+                                sb.AppendLine(string.Join(",", fields));
+                            }
+                            var b = Encoding.UTF8.GetBytes(sb.ToString());
+                            stream.Write(b, 0, b.Length);
+
+                        }
+                        else
+                            MessageBox.Show("No codes can be exported");
+
+                    }
+                    MessageBox.Show("Export completed!");
+                }
+            }
+        }
+
+        private void clearPasswords()
+        {
+            DataTable dt = (DataTable)dataGridView1.DataSource;
+            if (dt != null)
+                dt.Clear();
+            dataGridView1.DataSource = dt;
+            Passwords.Clear();
+        }
+
+        private void clearAllButton_Click(object sender, EventArgs e)
+        {
+            clearPasswords();
+            progressBar1.Value = 0;
+        }
+
+        private void exportDbButton_Click(object sender, EventArgs e)
+        {
+            bool res = db.Insert(Passwords);
+            if (res)
+            {
+                MessageBox.Show("Serial codes inserted correctly");
+                Passwords.Clear();
+            }
+            else
+                MessageBox.Show("Error during the insertion of the serial codes");
+        }
+
+        private void generateButton_Click(object sender, EventArgs e)
+        {
+            string ISBN = textBox2.Text;
+            int duration = comboBox1.SelectedIndex + 1;
             if (String.IsNullOrEmpty(ISBN))
             {
                 MessageBox.Show("You must specify the ISBN of the book to generate the codes");
@@ -122,63 +202,8 @@ namespace DocumentSerials
                 MessageBox.Show("The number of passwords format is not valid, please insert a number");
             }
 
-            generatePasswords(ISBN, Duration, numberOfPasswords);
-        }
+            generatePasswords(ISBN, duration, numberOfPasswords);
 
-
-        private void exportButton_Click(object sender, EventArgs e)
-        {
-            using (SaveFileDialog dialog = new SaveFileDialog())
-            {
-                dialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-                dialog.FilterIndex = 2;
-                dialog.RestoreDirectory = true;
-                dialog.FileName = "SerialCodes_" + textBox2.Text +
-                    "-" + DateTime.Today.Day + "-" + DateTime.Today.Month + "-" + DateTime.Today.Year +
-                    ".txt";
-
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    // Can use dialog.FileName
-                    using (Stream stream = dialog.OpenFile())
-                    {
-                        DataTable dt = (DataTable)dataGridView1.DataSource;
-                        foreach (DataRow row in dt.Rows)
-                        {
-                            byte[] output = Encoding.UTF8.GetBytes(row[2].ToString() + "\n");
-                            stream.Write(output, 0, output.Length);
-                        }
-                    }
-                    MessageBox.Show("Export completed!");
-                }
-            }
-        }
-
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-            DataTable dt = (DataTable)dataGridView1.DataSource;
-            if (dt != null)
-                dt.Clear();
-            dataGridView1.DataSource = dt;
-            Passwords.Clear();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            if(ISBN.Equals(String.Empty) || Passwords.Count <= 0)
-            {
-                MessageBox.Show("Insert ISBN and generate serials first");
-                return;
-            }
-             
-            bool res = db.Insert(ISBN, Passwords);
-            if (res)
-            {
-                MessageBox.Show("Serial codes inserted correctly");
-                Passwords.Clear();
-            }
-            else
-                MessageBox.Show("Error during the insertion of the serial codes");
         }
     }
 }
