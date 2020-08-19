@@ -24,7 +24,12 @@ namespace DocumentSerials
         //ok
         // no, first save, then commit, then commit changes, then sync
         // you didn't tell me that, i always save with CTRL+S so you didnt see it :D+
-        //mod 00.25 by mario
+        //mod 00.25 by mario//ok
+        // now we can work in the same project, i can see you changes, you can see mine, and sync
+        //cool
+        // if i upload a project i do the same?
+        // no you need to create a new repository on github, clone it like you've seen before, and then it's the same
+        // but first in github
         private void Init()
         {
             InitializeComponent();
