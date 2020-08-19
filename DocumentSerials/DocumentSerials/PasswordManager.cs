@@ -5,6 +5,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
+using Renci.SshNet.Messages;
 
 namespace DocumentSerials
 {
@@ -12,12 +14,21 @@ namespace DocumentSerials
     {
         private SerialCode sc;
         private Stopwatch stopWatch;
+        private ServerDatabase db;
+
+        /* DB PARAMETERS HERE */
+        private string server = "localhost";
+        private string db_name = "activation_codes";
+        private int port = 3306;
+        private string user = "root";
+        private string password = "prosecco";
 
         public PasswordManager()
         {
             Init();
             sc = new SerialCode();
             stopWatch = new Stopwatch();
+            db = new ServerDatabase(server, db_name, port, user, password);
         }
 
         private void Init()
@@ -76,7 +87,7 @@ namespace DocumentSerials
                     ts.Hours, ts.Minutes, ts.Seconds,
                     ts.Milliseconds / 10);
 
-            progressBar1.Value = 0;
+            //progressBar1.Value = 0;
             label4.Text = Convert.ToString((int)((float)0 / (float)n * 100)) + "%";
             
             return;
@@ -149,6 +160,18 @@ namespace DocumentSerials
             dataGridView1.DataSource = dt;
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if(db.StartConnection())
+            {
+                // DO YOUR STUFF HERE
+                db.CloseConnection();
+            }
+            else
+            {
+                MessageBox.Show("Couldn't connecto to database server, please contact server administrator");
+            }
+        }
     }
 }
     

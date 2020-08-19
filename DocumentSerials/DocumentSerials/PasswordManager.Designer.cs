@@ -37,7 +37,6 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.button2 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.txtTimer = new System.Windows.Forms.TextBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
@@ -56,6 +55,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -147,29 +147,18 @@
             this.panel5.Size = new System.Drawing.Size(685, 98);
             this.panel5.TabIndex = 7;
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(261, 50);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(100, 44);
-            this.button2.TabIndex = 11;
-            this.button2.Text = "Cancel";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(460, 9);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(281, 9);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(0, 17);
-            this.label4.TabIndex = 10;
+            this.label4.TabIndex = 12;
             // 
             // txtTimer
             // 
             this.txtTimer.Location = new System.Drawing.Point(590, 6);
-            this.txtTimer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtTimer.Margin = new System.Windows.Forms.Padding(4);
             this.txtTimer.Name = "txtTimer";
             this.txtTimer.Size = new System.Drawing.Size(88, 22);
             this.txtTimer.TabIndex = 9;
@@ -184,12 +173,12 @@
             // 
             // exportButton
             // 
-            this.exportButton.Location = new System.Drawing.Point(131, 49);
+            this.exportButton.Location = new System.Drawing.Point(427, 49);
             this.exportButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.exportButton.Name = "exportButton";
             this.exportButton.Size = new System.Drawing.Size(124, 43);
             this.exportButton.TabIndex = 5;
-            this.exportButton.Text = "Export";
+            this.exportButton.Text = "Export to file";
             this.exportButton.UseVisualStyleBackColor = true;
             this.exportButton.Click += new System.EventHandler(this.exportButton_Click);
             // 
@@ -344,6 +333,16 @@
             this.textBox2.Size = new System.Drawing.Size(368, 22);
             this.textBox2.TabIndex = 2;
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(130, 49);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(128, 42);
+            this.button2.TabIndex = 13;
+            this.button2.Text = "Export to DB";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // PasswordManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -399,8 +398,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn N;
         private System.Windows.Forms.DataGridViewTextBoxColumn Document;
         private System.Windows.Forms.DataGridViewTextBoxColumn Password;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtTimer;
+        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button2;
     }
 }
