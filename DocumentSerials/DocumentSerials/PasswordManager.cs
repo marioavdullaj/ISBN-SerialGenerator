@@ -11,10 +11,13 @@ namespace DocumentSerials
     public partial class PasswordManager : Form
     {
         private SerialCode sc;
+        private Stopwatch stopWatch;
+
         public PasswordManager()
         {
             Init();
             sc = new SerialCode();
+            stopWatch = new Stopwatch();
         }
 
         private void Init()
@@ -32,7 +35,8 @@ namespace DocumentSerials
 
         private void generatePasswords(string doc, int duration, int n)
         {
-           
+
+            stopWatch.Start();
             //List<string> passwords = new List<string> { };
             progressBar1.Value = 0;
             progressBar1.Maximum = n;
@@ -53,8 +57,7 @@ namespace DocumentSerials
             
             for (int actual_rows = dt.Rows.Count, i = actual_rows + 1; i <= actual_rows + n; i++)
             {
-                
-                    psw = sc.Generate(doc, duration);
+                psw = sc.Generate(doc, duration);
                 DataRow dr = dt.NewRow();
                 dr[0] = i.ToString();
                 dr[1] = doc;
@@ -62,17 +65,16 @@ namespace DocumentSerials
                 dt.Rows.Add(dr);
                 progressBar1.Value = i - actual_rows;
             }
+
             dataGridView1.DataSource = dt;
             dataGridView1.UseWaitCursor = false;
-            Stopwatch stopWatch = new Stopwatch();
-            stopWatch.Start();
+
             stopWatch.Stop();
 
             TimeSpan ts = stopWatch.Elapsed;
             txtTimer.Text = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
                     ts.Hours, ts.Minutes, ts.Seconds,
                     ts.Milliseconds / 10);
-            Thread.Sleep(0);
 
             progressBar1.Value = 0;
             label4.Text = Convert.ToString((int)((float)0 / (float)n * 100)) + "%";

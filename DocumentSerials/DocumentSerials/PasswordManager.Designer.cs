@@ -168,10 +168,10 @@
             // 
             // txtTimer
             // 
-            this.txtTimer.Location = new System.Drawing.Point(617, 7);
+            this.txtTimer.Location = new System.Drawing.Point(590, 6);
             this.txtTimer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtTimer.Name = "txtTimer";
-            this.txtTimer.Size = new System.Drawing.Size(68, 22);
+            this.txtTimer.Size = new System.Drawing.Size(88, 22);
             this.txtTimer.TabIndex = 9;
             // 
             // progressBar1
@@ -179,7 +179,7 @@
             this.progressBar1.Location = new System.Drawing.Point(1, 5);
             this.progressBar1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(610, 25);
+            this.progressBar1.Size = new System.Drawing.Size(582, 25);
             this.progressBar1.TabIndex = 9;
             // 
             // exportButton
