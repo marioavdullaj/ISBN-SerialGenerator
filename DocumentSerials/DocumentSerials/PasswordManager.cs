@@ -20,7 +20,8 @@ namespace DocumentSerials
         private ServerDatabase db;
 
         private Dictionary<string, List<Tuple<string, int>>> Passwords { get; set; }
-
+        private List<Tuple<int, string>> books;
+        private Dictionary<string, int> ActualRow { get; set; }
         public PasswordManager()
         {
             Init();
@@ -35,6 +36,8 @@ namespace DocumentSerials
             stopWatch = new Stopwatch();
             db = new ServerDatabase();
             Passwords = new Dictionary<string, List<Tuple<string, int>>>() { };
+            ActualRow = new Dictionary<string, int>() { };
+            books = new List<Tuple<int, string>>();
 
             // initialize combobox
             for (int i = 1; i <= 36; i++)
@@ -42,12 +45,19 @@ namespace DocumentSerials
                 comboBox1.Items.Add(i + " Months");
             }
             comboBox1.SelectedIndex = 0;
+
+            // initialize book combobox
+            books = db.GetBooks();
+            foreach(var book in books)
+            {
+                bookComboBox.Items.Add(book.Item2);
+            }
         }
 
 
         private void generateButton_Click(object sender, EventArgs e)
         {
-            string ISBN = textBox2.Text;
+            string ISBN = bookComboBox.Text;
             int duration = comboBox1.SelectedIndex + 1;
 
             if (String.IsNullOrEmpty(ISBN))
@@ -141,8 +151,13 @@ namespace DocumentSerials
 
             if (!Passwords.ContainsKey(doc))
                 Passwords.Add(doc, new List<Tuple<string, int>>());
+            if (!ActualRow.ContainsKey(doc))
+                ActualRow.Add(doc, 0);
 
-            for (int actual_rows = dt.Rows.Count, i = actual_rows + 1; i <= actual_rows + n; i++)
+            int db_row = db.Count(doc);
+            int actual_row = (ActualRow[doc] > db_row) ? ActualRow[doc] : db_row;
+            int i;
+            for (i = actual_row + 1; i <= actual_row + n; i++)
             {
                 psw = sc.Generate(doc, duration, i);
                 Passwords[doc].Add(new Tuple<string, int>(psw, duration));
@@ -154,9 +169,9 @@ namespace DocumentSerials
                 dr[3] = duration.ToString();
                 dt.Rows.Add(dr);
                 // update progress bar
-                progressBar1.Value = i - actual_rows;
+                progressBar1.Value = i - actual_row;
             }
-
+            ActualRow[doc] = i-1;
             dataGridView1.DataSource = dt;
             dataGridView1.UseWaitCursor = false;
 
@@ -166,7 +181,30 @@ namespace DocumentSerials
             txtTimer.Text = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
                     ts.Hours, ts.Minutes, ts.Seconds,
                     ts.Milliseconds / 10);
-            
+
+            // NOW WE INSERT INTO THE DB
+            DialogResult dialogResult = MessageBox.Show("Insert into the database?", "DB Conneciton", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+
+                bool res = db.Insert(Passwords);
+                if (res)
+                {
+                    MessageBox.Show("Serial codes inserted correctly");
+                    // Clear the passwords
+                    Passwords.Clear();
+                    string isbn = bookComboBox.Text;
+                    // And update the total number of codes generated for the book
+                    countTextBox.Text = db.Count(isbn).ToString();
+                }
+                else
+                    MessageBox.Show("Error during the insertion of the serial codes");
+            }
+            else if (dialogResult == DialogResult.No)
+            {
+                //do something else
+            }
+
             return;
         }
 
@@ -177,7 +215,7 @@ namespace DocumentSerials
                 dialog.Filter = "csv files (*.csv)|*.csv|All files (*.*)|*.*";
                 dialog.FilterIndex = 2;
                 dialog.RestoreDirectory = true;
-                dialog.FileName = "SerialCodes_" + textBox2.Text +
+                dialog.FileName = "SerialCodes_" + bookComboBox.Text +
                     "-" + DateTime.Today.Day + "-" + DateTime.Today.Month + "-" + DateTime.Today.Year +
                     ".csv";
 
@@ -234,16 +272,10 @@ namespace DocumentSerials
             progressBar1.Value = 0;
         }
 
-        private void exportDbButton_Click(object sender, EventArgs e)
+        private void bookComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            bool res = db.Insert(Passwords);
-            if (res)
-            {
-                MessageBox.Show("Serial codes inserted correctly");
-                Passwords.Clear();
-            }
-            else
-                MessageBox.Show("Error during the insertion of the serial codes");
+            string isbn = bookComboBox.Text;
+            countTextBox.Text = db.Count(isbn).ToString();
         }
     }
 }

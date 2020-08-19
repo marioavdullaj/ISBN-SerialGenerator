@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using System.Security.Cryptography;
 
 namespace DocumentSerials
 {
@@ -13,20 +14,21 @@ namespace DocumentSerials
     {
         public MySqlConnection Connector { get; set; }
         private string ConnectionString { get; set; }
+        private MD5 md5;
 
-        /* DB PARAMETERS HERE */
+        /* DB PARAMETERS HERE */// something wrong with the connection you must fix the my sql i think
         private string server = "localhost";
-        private string db_name = "activation_codes";
-        private int port = 3306;
+        private string db_name = "test";
+        private int port = 3308;
         private string user = "root";
-        private string password = "prosecco";
+        private string password = "Af2763311!";
 
         public ServerDatabase()
         {
             ConnectionString = "Server=" + server + "; Port=" + port.ToString() +
-                                "; Database=" + db_name + "; Uid=" + user + "; Pwd=" + password + "; pooling = true; " +
-                                "SslMode=REQUIRED;";
+                                "; Database=" + db_name + "; Uid=" + user + "; Pwd=" + password + "; pooling = true;";
             Connector = new MySqlConnection(ConnectionString);
+            md5 = MD5.Create();
         }
 
         public bool OpenConnection()
@@ -70,30 +72,64 @@ namespace DocumentSerials
         }
 
         #region CRUD OPERATIONS
+        public List<Tuple<int, string>> GetBooks()
+        {
+            List<Tuple<int, string>> books = new List<Tuple<int, string>>();
+            string query = "SELECT * FROM book";
+            if(OpenConnection())
+            {
+                MySqlCommand cmd = new MySqlCommand(query, Connector);
+                MySqlDataReader data = cmd.ExecuteReader();
+
+                while(data.Read())
+                {
+                    books.Add(new Tuple<int,string>(Convert.ToInt32(data["id"]), data["isbn"].ToString()));
+                }
+                data.Close();
+
+                CloseConnection();
+            }
+
+            return books;
+        }
+
+        public int GetBookId(string ISBN)
+        {
+            string query = "SELECT id FROM book WHERE isbn = '" + ISBN + "'";
+            int id = -1;
+
+            //Open Connection
+            if (OpenConnection())
+            {
+                //Create Mysql Command
+                MySqlCommand cmd = new MySqlCommand(query, Connector);
+
+                //ExecuteScalar will return one value
+                id = Convert.ToInt32(cmd.ExecuteScalar());
+                //close Connection
+                this.CloseConnection();
+            }
+            return id;
+        }
 
         public int Count(string ISBN)
         {
-            string query = "SELECT Count(*) FROM activation_code WHERE ISBN = " + ISBN;
+            int bookid = GetBookId(ISBN);
+            string query = "SELECT Count(*) FROM activation_codes WHERE bookid = " + bookid;
             int Count = -1;
 
             //Open Connection
-            if (this.OpenConnection() == true)
+            if (OpenConnection())
             {
                 //Create Mysql Command
                 MySqlCommand cmd = new MySqlCommand(query, Connector);
 
                 //ExecuteScalar will return one value
                 Count = int.Parse(cmd.ExecuteScalar() + "");
-
                 //close Connection
                 this.CloseConnection();
-
-                return Count;
             }
-            else
-            {
-                return Count;
-            }
+            return Count;
         }
 
         public bool Insert(Dictionary<string, List<Tuple<string, int>>> passwords)
@@ -101,7 +137,7 @@ namespace DocumentSerials
             int result = -1;
             StringBuilder queryBuilder = new StringBuilder();
 
-            queryBuilder.Append("INSERT INTO activation_code (ISBN, password) VALUES ");
+            queryBuilder.Append("INSERT INTO activation_codes (actcode, country, bookid, creation_date, creation_code) VALUES ");
 
             foreach (string ISBN in passwords.Keys)
             {
@@ -109,12 +145,23 @@ namespace DocumentSerials
                 {
                     string psw = item.Item1;
                     int duration = Convert.ToInt32(item.Item2);
-                    queryBuilder.Append("('" + ISBN + "', '" + psw + "', "+duration.ToString()+"),");
+                    // for now we put 1, we gotta create in the UI the country select as well
+                    int country = 1;
+                    DateTime now = DateTime.Now;
+                    string datenow = now.ToString("yyyy-MM-dd");
+                    // for now, we're going to fix in a while
+                    int bookid = GetBookId(ISBN);
+                    // MD5 creation_code from datetime now
+                    byte[] creation_code = md5.ComputeHash(Encoding.ASCII.GetBytes(datenow));
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = 0; i < creation_code.Length; i++) sb.Append(creation_code[i].ToString("X2"));
+                    // append the values to be inserted
+                    queryBuilder.Append("('" + psw + "', " + country + ", "+ bookid+", '"+ datenow + "','"+sb.ToString()+"'),");
                 }
             }
             queryBuilder = queryBuilder.Remove(queryBuilder.Length - 1, 1);
 
-            if (this.OpenConnection())
+            if (OpenConnection())
             {
                 try
                 {
@@ -130,7 +177,7 @@ namespace DocumentSerials
                 }
             }
 
-            return (result == passwords.Count);
+            return result > 0;
         }
 
         #endregion

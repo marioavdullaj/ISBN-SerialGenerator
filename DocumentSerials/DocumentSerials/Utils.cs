@@ -20,7 +20,7 @@ namespace DocumentSerials
             Console.WriteLine("Creating a new SerialCode object");
             // Setting default values
             NumBlocks = 4;
-            Size = 16;
+            Size = 20;
         }
 
         private void checkDocument(string document)
