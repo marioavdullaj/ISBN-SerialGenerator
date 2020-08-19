@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Renci.SshNet.Messages;
+using System.Collections.Generic;
 
 namespace DocumentSerials
 {
@@ -16,19 +17,16 @@ namespace DocumentSerials
         private Stopwatch stopWatch;
         private ServerDatabase db;
 
-        /* DB PARAMETERS HERE */
-        private string server = "localhost";
-        private string db_name = "activation_codes";
-        private int port = 3306;
-        private string user = "root";
-        private string password = "prosecco";
+        private string ISBN { get; set; }
+        private int Duration { get; set; }
+        private List<string> Passwords { get; set; }
 
         public PasswordManager()
         {
             Init();
             sc = new SerialCode();
             stopWatch = new Stopwatch();
-            db = new ServerDatabase(server, db_name, port, user, password);
+            db = new ServerDatabase();
         }
 
         private void Init()
@@ -69,11 +67,15 @@ namespace DocumentSerials
             for (int actual_rows = dt.Rows.Count, i = actual_rows + 1; i <= actual_rows + n; i++)
             {
                 psw = sc.Generate(doc, duration);
+                Passwords.Add(psw);
+
+                // Update gridview
                 DataRow dr = dt.NewRow();
                 dr[0] = i.ToString();
                 dr[1] = doc;
                 dr[2] = psw;
                 dt.Rows.Add(dr);
+                // update progress bar
                 progressBar1.Value = i - actual_rows;
             }
 
@@ -95,9 +97,9 @@ namespace DocumentSerials
 
         public void button1_Click(object sender, EventArgs e)
         {
-            string documentNumber = textBox2.Text;
-            int duration = comboBox1.SelectedIndex + 1;
-            if (String.IsNullOrEmpty(documentNumber))
+            ISBN = textBox2.Text;
+            Duration = comboBox1.SelectedIndex + 1;
+            if (String.IsNullOrEmpty(ISBN))
             {
                 MessageBox.Show("You must specify the ISBN of the book to generate the codes");
                 return;
@@ -120,7 +122,7 @@ namespace DocumentSerials
                 MessageBox.Show("The number of passwords format is not valid, please insert a number");
             }
 
-            generatePasswords(documentNumber, duration, numberOfPasswords);
+            generatePasswords(ISBN, Duration, numberOfPasswords);
         }
 
 
@@ -162,15 +164,11 @@ namespace DocumentSerials
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if(db.StartConnection())
-            {
-                // DO YOUR STUFF HERE
-                db.CloseConnection();
-            }
+            bool res = db.Insert(ISBN, Passwords);
+            if (res)
+                MessageBox.Show("Serial codes inserted correctly");
             else
-            {
-                MessageBox.Show("Couldn't connecto to database server, please contact server administrator");
-            }
+                MessageBox.Show("Error during the insertion of the serial codes");
         }
     }
 }

@@ -13,26 +13,107 @@ namespace DocumentSerials
         public MySqlConnection Connector { get; set; }
         private string ConnectionString { get; set; }
 
-        public ServerDatabase(string server, string db, int port, string user, string password)
+        /* DB PARAMETERS HERE */
+        private string server = "localhost";
+        private string db_name = "activation_codes";
+        private int port = 3306;
+        private string user = "root";
+        private string password = "prosecco";
+
+        public ServerDatabase()
         {
-            ConnectionString =  "Server=" + server + "; Port=" + port.ToString() + 
-                                "; Database=" + db + "; Uid=" + user  + "; Pwd=" + password + "; pooling = true; " +
+            ConnectionString = "Server=" + server + "; Port=" + port.ToString() +
+                                "; Database=" + db_name + "; Uid=" + user + "; Pwd=" + password + "; pooling = true; " +
                                 "SslMode=REQUIRED;";
             Connector = new MySqlConnection(ConnectionString);
         }
 
-        public bool StartConnection()
+        public bool OpenConnection()
         {
             if (Connector.State.Equals(System.Data.ConnectionState.Open))
                 return true;
 
-            Connector.Open();
-            return Connector.State.Equals(System.Data.ConnectionState.Open);
+            try
+            {
+                Connector.Open();
+                return Connector.State.Equals(System.Data.ConnectionState.Open);
+            }
+            catch (MySqlException ex)
+            {
+                switch (ex.Number)
+                {
+                    case 0:
+                        MessageBox.Show("Cannot connect to server.  Contact administrator");
+                        break;
+
+                    case 1045:
+                        MessageBox.Show("Invalid username/password, please try again");
+                        break;
+                }
+                return false;
+            }
         }
 
-        public void CloseConnection()
+        public bool CloseConnection()
         {
-            Connector.Close();
+            try
+            {
+                Connector.Close();
+                return true;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return false;
+            }
         }
+
+        #region CRUD OPERATIONS
+
+        public int Count(string ISBN)
+        {
+            string query = "SELECT Count(*) FROM activation_code WHERE ISBN = " + ISBN;
+            int Count = -1;
+
+            //Open Connection
+            if (this.OpenConnection() == true)
+            {
+                //Create Mysql Command
+                MySqlCommand cmd = new MySqlCommand(query, Connector);
+
+                //ExecuteScalar will return one value
+                Count = int.Parse(cmd.ExecuteScalar() + "");
+
+                //close Connection
+                this.CloseConnection();
+
+                return Count;
+            }
+            else
+            {
+                return Count;
+            }
+        }
+
+        public bool Insert(string ISBN, List<string> passwords)
+        {
+            int result = -1;
+            string query = "INSERT INTO activation_code (ISBN, password) VALUES ";
+            foreach (string psw in passwords)
+                query += "('" + ISBN + "', '" + psw + "'),";
+            query = query.Substring(0, query.Length - 1);
+
+            if (this.OpenConnection())
+            {
+                MySqlCommand cmd = new MySqlCommand(query, Connector);
+
+                result = cmd.ExecuteNonQuery();
+                this.CloseConnection();
+            }
+
+            return (result == passwords.Count);
+        }
+
+        #endregion
     }
 }
