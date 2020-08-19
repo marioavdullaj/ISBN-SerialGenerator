@@ -8,7 +8,6 @@ namespace DocumentSerials
     public class SerialCode
     {
         private List<string> documentCodes = new List<string> { };
-        private Dictionary<string, int> sequenceNumber = new Dictionary<string, int> { };
 
         private const char groupSeparator = '-';
         private const string chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -24,7 +23,6 @@ namespace DocumentSerials
             if (!documentCodes.Contains(document))
             {
                 documentCodes.Add(document);
-                sequenceNumber.Add(document, 0);
             }
             return;
         }
@@ -46,12 +44,11 @@ namespace DocumentSerials
             return new string(hash2);
         }
 
-        public string Generate(string document, int duration)
+        public string Generate(string document, int duration, int sequenceNumber)
         {
             this.checkDocument(document);
-            sequenceNumber[document] += 1;
 
-            string text = document + groupSeparator + duration + groupSeparator + Convert.ToString(sequenceNumber[document]);
+            string text = document + groupSeparator + duration + groupSeparator + Convert.ToString(sequenceNumber);
 
             string code = this.HashString(text);
             string groupedCode = "";

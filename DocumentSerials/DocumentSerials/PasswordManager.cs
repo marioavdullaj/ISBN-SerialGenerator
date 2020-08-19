@@ -73,7 +73,7 @@ namespace DocumentSerials
 
             for (int actual_rows = dt.Rows.Count, i = actual_rows + 1; i <= actual_rows + n; i++)
             {
-                psw = sc.Generate(doc, duration);
+                psw = sc.Generate(doc, duration, i);
                 Passwords[doc].Add(new Tuple<string, int>(psw, duration));
                 // Update gridview
                 DataRow dr = dt.NewRow();
