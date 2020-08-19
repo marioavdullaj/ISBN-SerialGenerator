@@ -52,6 +52,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.codeSizeTextBox = new System.Windows.Forms.TextBox();
+            this.numBlockTextBox = new System.Windows.Forms.TextBox();
             this.N = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Document = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -221,7 +225,7 @@
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.AllowUserToOrderColumns = true;
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
-            this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.N,
@@ -241,6 +245,10 @@
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.panel3.Controls.Add(this.numBlockTextBox);
+            this.panel3.Controls.Add(this.codeSizeTextBox);
+            this.panel3.Controls.Add(this.label5);
+            this.panel3.Controls.Add(this.label4);
             this.panel3.Controls.Add(this.comboBox1);
             this.panel3.Controls.Add(this.label7);
             this.panel3.Controls.Add(this.label3);
@@ -258,16 +266,16 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(311, 39);
+            this.comboBox1.Location = new System.Drawing.Point(130, 42);
             this.comboBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(368, 24);
+            this.comboBox1.Size = new System.Drawing.Size(228, 24);
             this.comboBox1.TabIndex = 8;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(4, 42);
+            this.label7.Location = new System.Drawing.Point(3, 45);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(113, 17);
             this.label7.TabIndex = 7;
@@ -276,7 +284,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(517, 112);
+            this.label3.Location = new System.Drawing.Point(435, 81);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(66, 17);
             this.label3.TabIndex = 4;
@@ -293,7 +301,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(589, 110);
+            this.textBox1.Location = new System.Drawing.Point(588, 78);
             this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(89, 22);
@@ -302,11 +310,45 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(311, 9);
+            this.textBox2.Location = new System.Drawing.Point(130, 11);
             this.textBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(368, 22);
+            this.textBox2.Size = new System.Drawing.Size(228, 22);
             this.textBox2.TabIndex = 2;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(435, 14);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(70, 17);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Code size";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(435, 46);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(118, 17);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Number of blocks";
+            // 
+            // codeSizeTextBox
+            // 
+            this.codeSizeTextBox.Location = new System.Drawing.Point(589, 11);
+            this.codeSizeTextBox.Name = "codeSizeTextBox";
+            this.codeSizeTextBox.Size = new System.Drawing.Size(88, 22);
+            this.codeSizeTextBox.TabIndex = 11;
+            this.codeSizeTextBox.Text = "16";
+            // 
+            // numBlockTextBox
+            // 
+            this.numBlockTextBox.Location = new System.Drawing.Point(589, 43);
+            this.numBlockTextBox.Name = "numBlockTextBox";
+            this.numBlockTextBox.Size = new System.Drawing.Size(88, 22);
+            this.numBlockTextBox.TabIndex = 12;
+            this.numBlockTextBox.Text = "4";
             // 
             // N
             // 
@@ -315,7 +357,7 @@
             this.N.MinimumWidth = 6;
             this.N.Name = "N";
             this.N.ReadOnly = true;
-            this.N.Width = 25;
+            this.N.Width = 75;
             // 
             // Document
             // 
@@ -338,11 +380,11 @@
             // Duration
             // 
             this.Duration.DataPropertyName = "Duration";
-            this.Duration.HeaderText = "Duration (Months)";
+            this.Duration.HeaderText = "Months";
             this.Duration.MinimumWidth = 6;
             this.Duration.Name = "Duration";
             this.Duration.ReadOnly = true;
-            this.Duration.Width = 125;
+            this.Duration.Width = 75;
             // 
             // PasswordManager
             // 
@@ -398,6 +440,10 @@
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.TextBox txtTimer;
         private System.Windows.Forms.Button exportDbButton;
+        private System.Windows.Forms.TextBox numBlockTextBox;
+        private System.Windows.Forms.TextBox codeSizeTextBox;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DataGridViewTextBoxColumn N;
         private System.Windows.Forms.DataGridViewTextBoxColumn Document;
         private System.Windows.Forms.DataGridViewTextBoxColumn Password;

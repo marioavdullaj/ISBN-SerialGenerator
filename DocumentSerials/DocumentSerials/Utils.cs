@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Security.Cryptography;
+using System.Windows.Forms;
 
 namespace DocumentSerials
 {
@@ -11,11 +12,15 @@ namespace DocumentSerials
 
         private const char groupSeparator = '-';
         private const string chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        private const int num_of_blocks = 4;
+        public int NumBlocks { get; set; }
+        public int Size { get; set; }
 
         public SerialCode()
         {
             Console.WriteLine("Creating a new SerialCode object");
+            // Setting default values
+            NumBlocks = 4;
+            Size = 16;
         }
 
         private void checkDocument(string document)
@@ -34,7 +39,7 @@ namespace DocumentSerials
             SHA256Managed hashstring = new SHA256Managed();
             byte[] hash = hashstring.ComputeHash(bytes);
 
-            char[] hash2 = new char[16];
+            char[] hash2 = new char[Size];
 
             for (int i = 0; i < hash2.Length; i++)
             {
@@ -52,10 +57,10 @@ namespace DocumentSerials
 
             string code = this.HashString(text);
             string groupedCode = "";
-            for(int i = 0; i < code.Length; i += num_of_blocks)
+            for(int i = 0, block_size = Convert.ToInt32(code.Length / NumBlocks); i < code.Length; i += block_size)
             {
-                string s = (i + num_of_blocks < code.Length) ? groupSeparator.ToString() : "";
-                groupedCode += code.Substring(i, Convert.ToInt32(code.Length / num_of_blocks)) + s;
+                string s = (i + block_size < code.Length) ? groupSeparator.ToString() : "";
+                groupedCode += code.Substring(i, block_size) + s;
             }
             return groupedCode;
         }

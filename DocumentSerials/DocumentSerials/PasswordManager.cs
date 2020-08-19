@@ -45,6 +45,77 @@ namespace DocumentSerials
         }
 
 
+        private void generateButton_Click(object sender, EventArgs e)
+        {
+            string ISBN = textBox2.Text;
+            int duration = comboBox1.SelectedIndex + 1;
+
+            if (String.IsNullOrEmpty(ISBN))
+            {
+                MessageBox.Show("You must specify the ISBN of the book to generate the codes");
+                return;
+            }
+
+            int numberOfPasswords = 0;
+            // validation of the fields
+            try
+            {
+
+                numberOfPasswords = Convert.ToInt32(textBox1.Text);
+                if (numberOfPasswords <= 0)
+                {
+                    MessageBox.Show("You must generate at least one password");
+                    return;
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("The number of passwords format is not valid, please insert a number");
+            }
+
+            int numOfBlocks = 0;
+            try
+            {
+
+                numOfBlocks = Convert.ToInt32(numBlockTextBox.Text);
+                if (numOfBlocks <= 0)
+                {
+                    MessageBox.Show("At least one block");
+                    return;
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("The number of blocks format is not valid, please insert a number");
+            }
+
+            int codeSize = 0;
+            try
+            {
+
+                codeSize = Convert.ToInt32(codeSizeTextBox.Text);
+                if (codeSize <= 8)
+                {
+                    MessageBox.Show("Code too short, it must be at least long 8 characters");
+                    return;
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("The code size format is not valid, please insert a number");
+            }
+
+            if(codeSize % numOfBlocks != 0)
+            {
+                MessageBox.Show(codeSize + " characters cannot be divided into " + numOfBlocks + " blocks");
+                return;
+            }
+            sc.NumBlocks = numOfBlocks;
+            sc.Size = codeSize;
+
+            generatePasswords(ISBN, duration, numberOfPasswords);
+        }
+
         private void generatePasswords(string doc, int duration, int n)
         {
 
@@ -173,37 +244,6 @@ namespace DocumentSerials
             }
             else
                 MessageBox.Show("Error during the insertion of the serial codes");
-        }
-
-        private void generateButton_Click(object sender, EventArgs e)
-        {
-            string ISBN = textBox2.Text;
-            int duration = comboBox1.SelectedIndex + 1;
-            if (String.IsNullOrEmpty(ISBN))
-            {
-                MessageBox.Show("You must specify the ISBN of the book to generate the codes");
-                return;
-            }
-
-            int numberOfPasswords = 0;
-            // validation of the fields
-            try
-            {
-
-                numberOfPasswords = Convert.ToInt32(textBox1.Text);
-                if (numberOfPasswords <= 0)
-                {
-                    MessageBox.Show("You must generate at least one password");
-                    return;
-                }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("The number of passwords format is not valid, please insert a number");
-            }
-
-            generatePasswords(ISBN, duration, numberOfPasswords);
-
         }
     }
 }
