@@ -211,7 +211,7 @@ namespace DocumentSerials
                     Passwords.Clear();
                     string isbn = bookComboBox.Text;
                     // And update the total number of codes generated for the book
-                    countTextBox.Text = db.Count(isbn).ToString();
+                    countTextBox.Text = db.Count(isbn).ToString() + " codes generated";
                 }
                 else
                     MessageBox.Show("Error during the insertion of the serial codes");
