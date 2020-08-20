@@ -291,7 +291,7 @@ namespace DocumentSerials
         private void bookComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             string isbn = bookComboBox.Text;
-            countTextBox.Text = db.Count(isbn).ToString();
+            countTextBox.Text = db.Count(isbn).ToString() + " codes generated";
         }
 
         private void PasswordManager_FormClosing(object sender, FormClosingEventArgs e)
