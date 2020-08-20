@@ -159,7 +159,7 @@
             this.panel2.Location = new System.Drawing.Point(0, 102);
             this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(699, 666);
+            this.panel2.Size = new System.Drawing.Size(699, 674);
             this.panel2.TabIndex = 3;
             // 
             // tabControl1
@@ -170,7 +170,7 @@
             this.tabControl1.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(699, 666);
+            this.tabControl1.Size = new System.Drawing.Size(699, 674);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -182,7 +182,7 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPage1.Size = new System.Drawing.Size(691, 637);
+            this.tabPage1.Size = new System.Drawing.Size(691, 645);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Generate";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -199,7 +199,7 @@
             this.panel5.Location = new System.Drawing.Point(2, 546);
             this.panel5.Margin = new System.Windows.Forms.Padding(2);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(687, 89);
+            this.panel5.Size = new System.Drawing.Size(687, 97);
             this.panel5.TabIndex = 7;
             // 
             // txtTimer
@@ -453,7 +453,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(699, 768);
+            this.ClientSize = new System.Drawing.Size(699, 776);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
