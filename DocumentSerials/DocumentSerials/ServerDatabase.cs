@@ -17,11 +17,11 @@ namespace DocumentSerials
         private MD5 md5;
 
         /* DB PARAMETERS HERE */// something wrong with the connection you must fix the my sql i think
-        private string server = "localhost";
-        private string db_name = "test";
+        private string server = "10.20.20.23";
+        private string db_name = "activation_codes";
         private int port = 3308;
-        private string user = "root";
-        private string password = "Af2763311!";
+        private string user = "chris";
+        private string password = "1234#$ER";
 
         public ServerDatabase()
         {
@@ -140,7 +140,7 @@ namespace DocumentSerials
                     string psw = item.Item1;
                     int duration = Convert.ToInt32(item.Item2);
                     // for now we put 1, we gotta create in the UI the country select as well
-                    int country = 1;
+                    int country = 0;
                     DateTime now = DateTime.Now;
                     string datenow = now.ToString("yyyy-MM-dd");
                     // for now, we're going to fix in a while
