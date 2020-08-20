@@ -18,10 +18,10 @@ namespace DocumentSerials
 
         /* DB PARAMETERS HERE */// 
         private string server = "localhost";
-        private string db_name = "test";
-        private int port = 3308;
+        private string db_name = "activation_codes";
+        private int port = 3306;
         private string user = "root";
-        private string password = "Af2763311!";
+        private string password = "prosecco";
 
         public ServerDatabase()
         {
@@ -106,6 +106,23 @@ namespace DocumentSerials
                 id = Convert.ToInt32(cmd.ExecuteScalar());
             }
             return id;
+        }
+
+        public int Count()
+        {
+            string query = "SELECT Count(*) FROM activation_codes";
+            int Count = -1;
+
+            //Open Connection
+            if (OpenConnection())
+            {
+                //Create Mysql Command
+                MySqlCommand cmd = new MySqlCommand(query, Connector);
+
+                //ExecuteScalar will return one value
+                Count = int.Parse(cmd.ExecuteScalar() + "");
+            }
+            return Count;
         }
 
         public int Count(string ISBN)

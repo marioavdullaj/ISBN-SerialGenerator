@@ -11,6 +11,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Win32;
 using System.Drawing;
+using System.Timers;
+using System.Runtime.CompilerServices;
+using System.ComponentModel;
+using System.Threading;
 
 namespace DocumentSerials
 {
@@ -19,6 +23,7 @@ namespace DocumentSerials
         private SerialCode sc;
         private Stopwatch stopWatch;
         private ServerDatabase db;
+        private System.Windows.Forms.Timer timer;
 
         private Dictionary<string, List<Tuple<string, int>>> Passwords { get; set; }
         private List<Tuple<int, string>> books;
@@ -26,6 +31,22 @@ namespace DocumentSerials
         public PasswordManager()
         {
             Init();
+            SetTimer();
+        }
+
+        private void PasswordManager_Load(object sender, EventArgs e) { }
+
+        private void SetTimer()
+        {
+            timer = new System.Windows.Forms.Timer();
+            timer.Tick += new EventHandler(TimerEventProcessor);
+            timer.Interval = 1000;
+            timer.Start();
+        }
+
+        private void TimerEventProcessor(Object myObject, EventArgs myEventArgs)
+        {
+            label14.Text = DateTime.Now.ToString();
         }
 
         private void Init()
@@ -43,6 +64,7 @@ namespace DocumentSerials
 
         private void InitUI()
         {
+
             // initialize combobox
             for (int i = 1; i <= 36; i++)
             {
@@ -56,6 +78,8 @@ namespace DocumentSerials
             {
                 bookComboBox.Items.Add(book.Item2);
             }
+
+            totalCountTextBox.Text = db.Count().ToString() + " codes generated";
         }
 
         private void generateButton_Click(object sender, EventArgs e)
@@ -118,7 +142,7 @@ namespace DocumentSerials
                 MessageBox.Show("The code size format is not valid, please insert a number");
             }
 
-            if(codeSize % numOfBlocks != 0)
+            if (codeSize % numOfBlocks != 0)
             {
                 MessageBox.Show(codeSize + " characters cannot be divided into " + numOfBlocks + " blocks");
                 return;
@@ -129,7 +153,7 @@ namespace DocumentSerials
             generatePasswords(ISBN, duration, numberOfPasswords);
         }
 
-        private void generatePasswords(string doc, int duration, int n)
+        private async void generatePasswords(string doc, int duration, int n)
         {
 
             stopWatch.Start();
@@ -159,6 +183,7 @@ namespace DocumentSerials
 
             int db_row = db.Count(doc);
             int actual_row = (ActualRow[doc] > db_row) ? ActualRow[doc] : db_row;
+
             int i;
             for (i = actual_row + 1; i <= actual_row + n; i++)
             {
@@ -171,10 +196,10 @@ namespace DocumentSerials
                 dr[2] = psw;
                 dr[3] = duration.ToString();
                 dt.Rows.Add(dr);
-                // update progress bar
-                progressBar1.Value = i - actual_row;
+                // update progress bar+
+                progressBar1.Value = i - actual_row - 1;
             }
-            ActualRow[doc] = i-1;
+            ActualRow[doc] = i - 1;
             dataGridView1.DataSource = dt;
             dataGridView1.UseWaitCursor = false;
 
@@ -199,6 +224,7 @@ namespace DocumentSerials
                     string isbn = bookComboBox.Text;
                     // And update the total number of codes generated for the book
                     countTextBox.Text = db.Count(isbn).ToString() + " codes generated";
+                    totalCountTextBox.Text = db.Count().ToString() + " codes generated";
                 }
                 else
                     MessageBox.Show("Error during the insertion of the serial codes");
@@ -283,6 +309,8 @@ namespace DocumentSerials
 
         private void PasswordManager_FormClosing(object sender, FormClosingEventArgs e)
         {
+            timer.Stop();
+            timer.Dispose();
             db.CloseConnection();
         }
 
