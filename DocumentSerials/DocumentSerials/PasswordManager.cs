@@ -55,13 +55,18 @@ namespace DocumentSerials
             }
 
             // Opening the connection
-            label8.Text = "Connecting....";
-            label8.ForeColor = Color.Yellow;
+            label10.Text = "Connecting....";
+            label10.ForeColor = Color.Yellow;
             bool res = db.OpenConnection();
             if (res)
             {
-                label8.Text = "Connected";
-                label8.ForeColor = Color.Green;
+                label10.Text = "Connected";
+                label10.ForeColor = Color.Green;
+            }
+            else
+            {
+                label10.Text = "Not connected";
+                label10.ForeColor = Color.DarkRed;
             }
         }
 
