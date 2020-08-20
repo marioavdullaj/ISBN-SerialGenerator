@@ -62,6 +62,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -82,6 +83,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel1.Controls.Add(this.label9);
             this.panel1.Controls.Add(this.label8);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -408,11 +410,22 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(408, 22);
+            this.label8.ForeColor = System.Drawing.Color.Green;
+            this.label8.Location = new System.Drawing.Point(416, 9);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(96, 13);
+            this.label8.Size = new System.Drawing.Size(95, 13);
             this.label8.TabIndex = 8;
-            this.label8.Text = "Connected or Error";
+            this.label8.Text = "Connected DB .....";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.ForeColor = System.Drawing.Color.Red;
+            this.label9.Location = new System.Drawing.Point(416, 25);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(89, 13);
+            this.label9.TabIndex = 8;
+            this.label9.Text = "Connection Error!";
             // 
             // PasswordManager
             // 
@@ -478,6 +491,7 @@
         private System.Windows.Forms.TextBox countTextBox;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
     }
 }
 
