@@ -10,6 +10,7 @@ using Renci.SshNet.Messages;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Win32;
+using System.Drawing;
 
 namespace DocumentSerials
 {
@@ -51,6 +52,16 @@ namespace DocumentSerials
             foreach(var book in books)
             {
                 bookComboBox.Items.Add(book.Item2);
+            }
+
+            // Opening the connection
+            label8.Text = "Connecting....";
+            label8.ForeColor = Color.Yellow;
+            bool res = db.OpenConnection();
+            if (res)
+            {
+                label8.Text = "Connected";
+                label8.ForeColor = Color.Green;
             }
         }
 
@@ -276,6 +287,11 @@ namespace DocumentSerials
         {
             string isbn = bookComboBox.Text;
             countTextBox.Text = db.Count(isbn).ToString();
+        }
+
+        private void PasswordManager_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            db.CloseConnection();
         }
     }
 }

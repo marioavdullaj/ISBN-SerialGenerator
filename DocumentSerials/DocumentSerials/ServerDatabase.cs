@@ -86,8 +86,6 @@ namespace DocumentSerials
                     books.Add(new Tuple<int,string>(Convert.ToInt32(data["id"]), data["isbn"].ToString()));
                 }
                 data.Close();
-
-                CloseConnection();
             }
 
             return books;
@@ -106,8 +104,6 @@ namespace DocumentSerials
 
                 //ExecuteScalar will return one value
                 id = Convert.ToInt32(cmd.ExecuteScalar());
-                //close Connection
-                this.CloseConnection();
             }
             return id;
         }
@@ -126,8 +122,6 @@ namespace DocumentSerials
 
                 //ExecuteScalar will return one value
                 Count = int.Parse(cmd.ExecuteScalar() + "");
-                //close Connection
-                this.CloseConnection();
             }
             return Count;
         }
@@ -169,7 +163,6 @@ namespace DocumentSerials
                     MySqlCommand cmd = new MySqlCommand(query, Connector);
 
                     result = cmd.ExecuteNonQuery();
-                    this.CloseConnection();
                 }
                 catch(Exception ex)
                 {
