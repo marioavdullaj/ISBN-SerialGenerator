@@ -16,12 +16,12 @@ namespace DocumentSerials
         private string ConnectionString { get; set; }
         private MD5 md5;
 
-        /* DB PARAMETERS HERE */// something wrong with the connection you must fix the my sql i think
-        private string server = "10.20.20.23";
-        private string db_name = "activation_codes";
+        /* DB PARAMETERS HERE */// 
+        private string server = "localhost";
+        private string db_name = "test";
         private int port = 3308;
-        private string user = "chris";
-        private string password = "1234#$ER";
+        private string user = "root";
+        private string password = "Af2763311!";
 
         public ServerDatabase()
         {
