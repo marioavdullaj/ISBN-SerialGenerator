@@ -32,6 +32,8 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -61,8 +63,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -92,6 +92,26 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(699, 60);
             this.panel1.TabIndex = 2;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.ForeColor = System.Drawing.Color.DarkRed;
+            this.label10.Location = new System.Drawing.Point(592, 29);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(100, 17);
+            this.label10.TabIndex = 2;
+            this.label10.Text = "Not connected";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.label9.Location = new System.Drawing.Point(574, 9);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(121, 17);
+            this.label9.TabIndex = 1;
+            this.label9.Text = "Connection status";
             // 
             // label1
             // 
@@ -173,7 +193,7 @@
             // 
             // exportButton
             // 
-            this.exportButton.Location = new System.Drawing.Point(320, 40);
+            this.exportButton.Location = new System.Drawing.Point(422, 40);
             this.exportButton.Margin = new System.Windows.Forms.Padding(2);
             this.exportButton.Name = "exportButton";
             this.exportButton.Size = new System.Drawing.Size(124, 43);
@@ -195,7 +215,7 @@
             // 
             // clearAllButton
             // 
-            this.clearAllButton.Location = new System.Drawing.Point(418, 40);
+            this.clearAllButton.Location = new System.Drawing.Point(550, 40);
             this.clearAllButton.Margin = new System.Windows.Forms.Padding(2);
             this.clearAllButton.Name = "clearAllButton";
             this.clearAllButton.Size = new System.Drawing.Size(127, 43);
@@ -401,26 +421,6 @@
             this.label6.Size = new System.Drawing.Size(97, 13);
             this.label6.TabIndex = 14;
             this.label6.Text = "# codes generated";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.label9.Location = new System.Drawing.Point(574, 9);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(121, 17);
-            this.label9.TabIndex = 1;
-            this.label9.Text = "Connection status";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.ForeColor = System.Drawing.Color.DarkRed;
-            this.label10.Location = new System.Drawing.Point(592, 29);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(100, 17);
-            this.label10.TabIndex = 2;
-            this.label10.Text = "Not connected";
             // 
             // PasswordManager
             // 
