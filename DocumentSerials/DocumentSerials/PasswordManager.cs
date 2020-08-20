@@ -39,7 +39,10 @@ namespace DocumentSerials
             Passwords = new Dictionary<string, List<Tuple<string, int>>>() { };
             ActualRow = new Dictionary<string, int>() { };
             books = new List<Tuple<int, string>>();
+        }
 
+        private void InitUI()
+        {
             // initialize combobox
             for (int i = 1; i <= 36; i++)
             {
@@ -49,7 +52,7 @@ namespace DocumentSerials
 
             // initialize book combobox
             books = db.GetBooks();
-            foreach(var book in books)
+            foreach (var book in books)
             {
                 bookComboBox.Items.Add(book.Item2);
             }
@@ -294,7 +297,7 @@ namespace DocumentSerials
             {
                 label10.Text = "Connected";
                 label10.ForeColor = Color.Green;
-                Init();
+                InitUI();
             }
             else
             {
