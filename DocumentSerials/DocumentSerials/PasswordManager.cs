@@ -53,23 +53,7 @@ namespace DocumentSerials
             {
                 bookComboBox.Items.Add(book.Item2);
             }
-
-            // Opening the connection
-            label10.Text = "Connecting....";
-            label10.ForeColor = Color.Yellow;
-            bool res = db.OpenConnection();
-            if (res)
-            {
-                label10.Text = "Connected";
-                label10.ForeColor = Color.Green;
-            }
-            else
-            {
-                label10.Text = "Not connected";
-                label10.ForeColor = Color.DarkRed;
-            }
         }
-
 
         private void generateButton_Click(object sender, EventArgs e)
         {
@@ -297,6 +281,30 @@ namespace DocumentSerials
         private void PasswordManager_FormClosing(object sender, FormClosingEventArgs e)
         {
             db.CloseConnection();
+        }
+
+        private async Task OpenConnection()
+        {
+            // Opening the connection
+            label10.Text = "Connecting....";
+            label10.ForeColor = Color.Yellow;
+            await Task.Delay(10);
+            bool res = db.OpenConnection();
+            if (res)
+            {
+                label10.Text = "Connected";
+                label10.ForeColor = Color.Green;
+            }
+            else
+            {
+                label10.Text = "Error";
+                label10.ForeColor = Color.DarkRed;
+            }
+        }
+
+        private async void label11_Click(object sender, EventArgs e)
+        {
+            await OpenConnection();
         }
     }
 }
