@@ -16,6 +16,7 @@ using System.Runtime.CompilerServices;
 using System.ComponentModel;
 using System.Threading;
 
+
 namespace DocumentSerials
 {
     public partial class PasswordManager : Form
@@ -60,6 +61,9 @@ namespace DocumentSerials
             Passwords = new Dictionary<string, List<Tuple<string, int>>>() { };
             ActualRow = new Dictionary<string, int>() { };
             books = new List<Tuple<int, string>>();
+            AutoCompleteStringCollection collect = new AutoCompleteStringCollection();
+
+          
         }
 
         private void InitUI()
@@ -79,20 +83,20 @@ namespace DocumentSerials
                 bookComboBox.Items.Add(book.Item2);
             }
 
-            totalCountTextBox.Text = db.Count().ToString() + " codes generated";
+            totalCountTextBox.Text = db.Count().ToString();
         }
 
         private void generateButton_Click(object sender, EventArgs e)
         {
             string ISBN = bookComboBox.Text;
             int duration = comboBox1.SelectedIndex + 1;
-
-            if (String.IsNullOrEmpty(ISBN))
+          
+                if (String.IsNullOrEmpty(ISBN))
             {
                 MessageBox.Show("You must specify the ISBN of the book to generate the codes");
                 return;
             }
-
+            
             int numberOfPasswords = 0;
             // validation of the fields
             try
@@ -209,27 +213,26 @@ namespace DocumentSerials
             txtTimer.Text = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
                     ts.Hours, ts.Minutes, ts.Seconds,
                     ts.Milliseconds / 10);
-
+       
             // NOW WE INSERT INTO THE DB
-            DialogResult dialogResult = MessageBox.Show("Insert into the database?", "DB Conneciton", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
+            
             {
 
                 bool res = db.Insert(Passwords);
                 if (res)
                 {
-                    MessageBox.Show("Serial codes inserted correctly");
+                    MessageBox.Show("Database Successfully Updated...");
                     // Clear the passwords
                     Passwords.Clear();
                     string isbn = bookComboBox.Text;
                     // And update the total number of codes generated for the book
-                    countTextBox.Text = db.Count(isbn).ToString() + " codes generated";
-                    totalCountTextBox.Text = db.Count().ToString() + " codes generated";
+                    countTextBox.Text = db.Count(isbn).ToString();
+                    totalCountTextBox.Text = db.Count().ToString();
                 }
                 else
                     MessageBox.Show("Error during the insertion of the serial codes");
             }
-            else if (dialogResult == DialogResult.No)
+           
             {
                 //do something else
             }
@@ -304,7 +307,7 @@ namespace DocumentSerials
         private void bookComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             string isbn = bookComboBox.Text;
-            countTextBox.Text = db.Count(isbn).ToString() + " codes generated";
+            countTextBox.Text = db.Count(isbn).ToString();
         }
 
         private void PasswordManager_FormClosing(object sender, FormClosingEventArgs e)
@@ -338,6 +341,9 @@ namespace DocumentSerials
         {
             await OpenConnection();
         }
+        
+        
+        
     }
 }
     

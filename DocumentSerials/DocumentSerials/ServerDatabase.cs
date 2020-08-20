@@ -18,10 +18,10 @@ namespace DocumentSerials
 
         /* DB PARAMETERS HERE */// 
         private string server = "localhost";
-        private string db_name = "activation_codes";
-        private int port = 3306;
+        private string db_name = "test";
+        private int port = 3308;
         private string user = "root";
-        private string password = "prosecco";
+        private string password = "Af2763311!";
 
         public ServerDatabase()
         {
