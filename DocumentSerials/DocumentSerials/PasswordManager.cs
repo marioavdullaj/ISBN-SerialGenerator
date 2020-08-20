@@ -294,6 +294,7 @@ namespace DocumentSerials
             {
                 label10.Text = "Connected";
                 label10.ForeColor = Color.Green;
+                Init();
             }
             else
             {
