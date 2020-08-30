@@ -158,5 +158,8 @@
   <ItemGroup>
     <None Include="Resources\refresh %282%29.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="SQL\db_tables.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
