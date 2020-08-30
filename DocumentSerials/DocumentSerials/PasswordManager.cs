@@ -26,7 +26,7 @@ namespace DocumentSerials
         private System.Windows.Forms.Timer timer;
 
         private Dictionary<string, List<Tuple<string, int>>> Passwords { get; set; }
-        private List<Tuple<int, string>> books;
+        private List<Book> books;
         private Dictionary<string, int> ActualRow { get; set; }
         public PasswordManager()
         {
@@ -59,7 +59,7 @@ namespace DocumentSerials
             db = new ServerDatabase();
             Passwords = new Dictionary<string, List<Tuple<string, int>>>() { };
             ActualRow = new Dictionary<string, int>() { };
-            books = new List<Tuple<int, string>>();
+            books = new List<Book>();
         }
 
         private void InitUI()
@@ -76,7 +76,7 @@ namespace DocumentSerials
             books = db.GetBooks();
             foreach (var book in books)
             {
-                bookComboBox.Items.Add(book.Item2);
+                bookComboBox.Items.Add(book.Title);
             }
 
             totalCountTextBox.Text = db.Count().ToString() + " codes generated";
@@ -84,12 +84,12 @@ namespace DocumentSerials
 
         private void generateButton_Click(object sender, EventArgs e)
         {
-            string ISBN = bookComboBox.Text;
+            string title = bookComboBox.Text;
             int duration = comboBox1.SelectedIndex + 1;
 
-            if (String.IsNullOrEmpty(ISBN))
+            if (String.IsNullOrEmpty(title))
             {
-                MessageBox.Show("You must specify the ISBN of the book to generate the codes");
+                MessageBox.Show("You must specify the title of the book to generate the codes");
                 return;
             }
 
@@ -150,10 +150,10 @@ namespace DocumentSerials
             sc.NumBlocks = numOfBlocks;
             sc.Size = codeSize;
 
-            generatePasswords(ISBN, duration, numberOfPasswords);
+            generatePasswords(title, duration, numberOfPasswords);
         }
 
-        private async void generatePasswords(string doc, int duration, int n)
+        private void generatePasswords(string doc, int duration, int n)
         {
 
             stopWatch.Start();
@@ -221,9 +221,9 @@ namespace DocumentSerials
                     MessageBox.Show("Serial codes inserted correctly");
                     // Clear the passwords
                     Passwords.Clear();
-                    string isbn = bookComboBox.Text;
+                    string title = bookComboBox.Text;
                     // And update the total number of codes generated for the book
-                    countTextBox.Text = db.Count(isbn).ToString() + " codes generated";
+                    countTextBox.Text = db.Count(title).ToString() + " codes generated";
                     totalCountTextBox.Text = db.Count().ToString() + " codes generated";
                 }
                 else
@@ -303,8 +303,8 @@ namespace DocumentSerials
 
         private void bookComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string isbn = bookComboBox.Text;
-            countTextBox.Text = db.Count(isbn).ToString() + " codes generated";
+            string title = bookComboBox.Text;
+            countTextBox.Text = db.Count(title).ToString() + " codes generated";
         }
 
         private void PasswordManager_FormClosing(object sender, FormClosingEventArgs e)
@@ -337,6 +337,12 @@ namespace DocumentSerials
         private async void label11_Click(object sender, EventArgs e)
         {
             await OpenConnection();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            xml_importer page = new xml_importer();
+            page.ShowDialog();
         }
     }
 }

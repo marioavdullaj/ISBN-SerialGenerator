@@ -100,7 +100,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(699, 102);
+            this.panel1.Size = new System.Drawing.Size(699, 128);
             this.panel1.TabIndex = 2;
             // 
             // label14
@@ -171,10 +171,10 @@
             // 
             this.panel2.Controls.Add(this.tabControl1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 102);
+            this.panel2.Location = new System.Drawing.Point(0, 128);
             this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(699, 680);
+            this.panel2.Size = new System.Drawing.Size(699, 668);
             this.panel2.TabIndex = 3;
             // 
             // tabControl1
@@ -185,7 +185,7 @@
             this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(699, 680);
+            this.tabControl1.Size = new System.Drawing.Size(699, 668);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -197,7 +197,7 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage1.Size = new System.Drawing.Size(691, 651);
+            this.tabPage1.Size = new System.Drawing.Size(691, 639);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Generate";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -216,7 +216,7 @@
             this.panel5.Location = new System.Drawing.Point(3, 546);
             this.panel5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(685, 103);
+            this.panel5.Size = new System.Drawing.Size(685, 91);
             this.panel5.TabIndex = 7;
             // 
             // percLabel
@@ -248,7 +248,7 @@
             // exportButton
             // 
             this.exportButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.exportButton.Location = new System.Drawing.Point(130, 39);
+            this.exportButton.Location = new System.Drawing.Point(408, 39);
             this.exportButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.exportButton.Name = "exportButton";
             this.exportButton.Size = new System.Drawing.Size(140, 43);
@@ -277,13 +277,14 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(127, 43);
             this.button1.TabIndex = 6;
-            this.button1.Text = "Cancel";
+            this.button1.Text = "Import XML";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // clearAllButton
             // 
             this.clearAllButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.clearAllButton.Location = new System.Drawing.Point(421, 39);
+            this.clearAllButton.Location = new System.Drawing.Point(130, 39);
             this.clearAllButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.clearAllButton.Name = "clearAllButton";
             this.clearAllButton.Size = new System.Drawing.Size(127, 43);
@@ -521,7 +522,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(699, 782);
+            this.ClientSize = new System.Drawing.Size(699, 796);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;

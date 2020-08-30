@@ -17,11 +17,11 @@ namespace DocumentSerials
         private MD5 md5;
 
         /* DB PARAMETERS HERE */// 
-        private string server = "localhost";
-        private string db_name = "activation_codes";
-        private int port = 3306;
-        private string user = "root";
-        private string password = "prosecco";
+        private string server = ConfigurationManager.AppSettings["server"];
+        private string db_name = ConfigurationManager.AppSettings["db_name"];
+        private int port = Convert.ToInt32(ConfigurationManager.AppSettings["port"]);
+        private string user = ConfigurationManager.AppSettings["user"];
+        private string password = ConfigurationManager.AppSettings["password"];
 
         public ServerDatabase()
         {
@@ -72,9 +72,9 @@ namespace DocumentSerials
         }
 
         #region CRUD OPERATIONS
-        public List<Tuple<int, string>> GetBooks()
+        public List<Book> GetBooks()
         {
-            List<Tuple<int, string>> books = new List<Tuple<int, string>>();
+            List<Book> books = new List<Book>();
             string query = "SELECT * FROM book";
             if(OpenConnection())
             {
@@ -83,7 +83,7 @@ namespace DocumentSerials
 
                 while(data.Read())
                 {
-                    books.Add(new Tuple<int,string>(Convert.ToInt32(data["id"]), data["isbn"].ToString()));
+                    books.Add(new Book(Convert.ToInt32(data["id"]), data["title"].ToString(), data["description"].ToString()));
                 }
                 data.Close();
             }
@@ -91,9 +91,9 @@ namespace DocumentSerials
             return books;
         }
 
-        public int GetBookId(string ISBN)
+        public int GetBookId(string title)
         {
-            string query = "SELECT id FROM book WHERE isbn = '" + ISBN + "'";
+            string query = "SELECT id FROM book WHERE title = '" + title + "'";
             int id = -1;
 
             //Open Connection
@@ -125,9 +125,9 @@ namespace DocumentSerials
             return Count;
         }
 
-        public int Count(string ISBN)
+        public int Count(string title)
         {
-            int bookid = GetBookId(ISBN);
+            int bookid = GetBookId(title);
             string query = "SELECT Count(*) FROM activation_codes WHERE bookid = " + bookid;
             int Count = -1;
 
@@ -150,9 +150,9 @@ namespace DocumentSerials
 
             queryBuilder.Append("INSERT INTO activation_codes (actcode, country, bookid, creation_date, creation_code) VALUES ");
 
-            foreach (string ISBN in passwords.Keys)
+            foreach (string title in passwords.Keys)
             {
-                foreach(var item in passwords[ISBN])
+                foreach(var item in passwords[title])
                 {
                     string psw = item.Item1;
                     int duration = Convert.ToInt32(item.Item2);
@@ -161,7 +161,7 @@ namespace DocumentSerials
                     DateTime now = DateTime.Now;
                     string datenow = now.ToString("yyyy-MM-dd");
                     // for now, we're going to fix in a while
-                    int bookid = GetBookId(ISBN);
+                    int bookid = GetBookId(title);
                     // MD5 creation_code from datetime now
                     byte[] creation_code = md5.ComputeHash(Encoding.ASCII.GetBytes(datenow));
                     StringBuilder sb = new StringBuilder();
@@ -182,6 +182,37 @@ namespace DocumentSerials
                     result = cmd.ExecuteNonQuery();
                 }
                 catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+
+            return result > 0;
+        }
+
+        public bool InsertBooks(List<Book> books)
+        {
+            int result = -1;
+            StringBuilder queryBuilder = new StringBuilder();
+
+            queryBuilder.Append("INSERT INTO book VALUES ");
+
+            foreach (Book book in books)
+            {
+                queryBuilder.Append("(" + book.Id + ", '" + book.Title.Replace("'", "''") + "', '" + book.Description + "'),");
+            }
+            queryBuilder = queryBuilder.Remove(queryBuilder.Length - 1, 1);
+
+            if (OpenConnection())
+            {
+                try
+                {
+                    string query = queryBuilder.ToString();
+                    MySqlCommand cmd = new MySqlCommand(query, Connector);
+
+                    result = cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
