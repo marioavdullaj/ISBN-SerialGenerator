@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.Security.Cryptography;
+using DocumentSerials.Models;
+using System.CodeDom;
 
 namespace DocumentSerials
 {
@@ -15,8 +17,7 @@ namespace DocumentSerials
         public MySqlConnection Connector { get; set; }
         private string ConnectionString { get; set; }
         private MD5 md5;
-
-        /* DB PARAMETERS HERE */// 
+ 
         private string server = ConfigurationManager.AppSettings["server"];
         private string db_name = ConfigurationManager.AppSettings["db_name"];
         private int port = Convert.ToInt32(ConfigurationManager.AppSettings["port"]);
@@ -71,7 +72,7 @@ namespace DocumentSerials
             }
         }
 
-        #region CRUD OPERATIONS
+#region CRUD OPERATIONS
         public List<Book> GetBooks()
         {
             List<Book> books = new List<Book>();
@@ -91,9 +92,81 @@ namespace DocumentSerials
             return books;
         }
 
+        public List<Duration> GetDurations()
+        {
+            List<Duration> durations = new List<Duration>();
+            string query = "SELECT * FROM duration";
+            if (OpenConnection())
+            {
+                MySqlCommand cmd = new MySqlCommand(query, Connector);
+                MySqlDataReader data = cmd.ExecuteReader();
+
+                while (data.Read())
+                {
+                    durations.Add(new Duration(Convert.ToInt32(data["id"]), data["description"].ToString()));
+                }
+                data.Close();
+            }
+
+            return durations;
+        }
+
+        public List<Country> GetCountries()
+        {
+            List<Country> countries = new List<Country>();
+            string query = "SELECT * FROM country";
+            if (OpenConnection())
+            {
+                MySqlCommand cmd = new MySqlCommand(query, Connector);
+                MySqlDataReader data = cmd.ExecuteReader();
+
+                while (data.Read())
+                {
+                    countries.Add(new Country(Convert.ToInt32(data["iso"]), data["code"].ToString(), data["name"].ToString()));
+                }
+                data.Close();
+            }
+
+            return countries;
+        }
+
         public int GetBookId(string title)
         {
             string query = "SELECT id FROM book WHERE title = '" + title + "'";
+            int id = -1;
+
+            //Open Connection
+            if (OpenConnection())
+            {
+                //Create Mysql Command
+                MySqlCommand cmd = new MySqlCommand(query, Connector);
+
+                //ExecuteScalar will return one value
+                id = Convert.ToInt32(cmd.ExecuteScalar());
+            }
+            return id;
+        }
+
+        public int GetCountryIso(string name)
+        {
+            string query = "SELECT iso FROM country WHERE name = '" + name + "'";
+            int iso = -1;
+
+            //Open Connection
+            if (OpenConnection())
+            {
+                //Create Mysql Command
+                MySqlCommand cmd = new MySqlCommand(query, Connector);
+
+                //ExecuteScalar will return one value
+                iso = Convert.ToInt32(cmd.ExecuteScalar());
+            }
+            return iso;
+        }
+
+        public int GetDurationId(string description)
+        {
+            string query = "SELECT id FROM duration WHERE description = '" + description + "'";
             int id = -1;
 
             //Open Connection
@@ -143,32 +216,26 @@ namespace DocumentSerials
             return Count;
         }
 
-        public bool Insert(Dictionary<string, List<Tuple<string, int>>> passwords)
+        public bool InsertCode(List<Code> codes)
         {
             int result = -1;
             StringBuilder queryBuilder = new StringBuilder();
 
             queryBuilder.Append("INSERT INTO activation_codes (actcode, country, bookid, creation_date, creation_code) VALUES ");
 
-            foreach (string title in passwords.Keys)
+            foreach (Code code in codes)
             {
-                foreach(var item in passwords[title])
-                {
-                    string psw = item.Item1;
-                    int duration = Convert.ToInt32(item.Item2);
-                    // for now we put 1, we gotta create in the UI the country select as well
-                    int country = 0;
-                    DateTime now = DateTime.Now;
-                    string datenow = now.ToString("yyyy-MM-dd");
-                    // for now, we're going to fix in a while
-                    int bookid = GetBookId(title);
-                    // MD5 creation_code from datetime now
-                    byte[] creation_code = md5.ComputeHash(Encoding.ASCII.GetBytes(datenow));
-                    StringBuilder sb = new StringBuilder();
-                    for (int i = 0; i < creation_code.Length; i++) sb.Append(creation_code[i].ToString("X2"));
-                    // append the values to be inserted
-                    queryBuilder.Append("('" + psw + "', " + country + ", "+ bookid+", '"+ datenow + "','"+sb.ToString()+"'),");
-                }
+                string psw = code.Actcode;
+                int durationId = GetDurationId(code.Duration);
+                int countryIso = GetCountryIso(code.Country);
+                string datenow = DateTime.Now.ToString("yyyy-MM-dd");
+                int bookid = GetBookId(code.Book);
+                // MD5 creation_code from datetime now
+                byte[] creation_code = md5.ComputeHash(Encoding.ASCII.GetBytes(datenow));
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < creation_code.Length; i++) sb.Append(creation_code[i].ToString("X2"));
+                // append the values to be inserted
+                queryBuilder.Append("('" + psw + "', " + countryIso + ", "+ bookid+", '"+ datenow + "','"+sb.ToString()+"'),");
             }
             queryBuilder = queryBuilder.Remove(queryBuilder.Length - 1, 1);
 
@@ -189,38 +256,91 @@ namespace DocumentSerials
 
             return result > 0;
         }
-
-        public bool InsertBooks(List<Book> books)
+        #region XML_UPLOAD
+        public bool InsertXML(List<Object> list, Type type)
         {
             int result = -1;
             StringBuilder queryBuilder = new StringBuilder();
 
-            queryBuilder.Append("INSERT INTO book VALUES ");
-
-            foreach (Book book in books)
+            if (type == typeof(Country))
             {
-                queryBuilder.Append("(" + book.Id + ", '" + book.Title.Replace("'", "''") + "', '" + book.Description + "'),");
-            }
-            queryBuilder = queryBuilder.Remove(queryBuilder.Length - 1, 1);
 
-            if (OpenConnection())
+                queryBuilder.Append("INSERT INTO country VALUES ");
+
+                foreach (Country country in list)
+                {
+                    queryBuilder.Append("(" + country.Id + ", '" + country.Iso + "', '" + country.Name.Replace("'", "''") + "'),");
+                }
+                queryBuilder = queryBuilder.Remove(queryBuilder.Length - 1, 1);
+
+                if (OpenConnection())
+                {
+                    try
+                    {
+                        string query = queryBuilder.ToString();
+                        MySqlCommand cmd = new MySqlCommand(query, Connector);
+
+                        result = cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+            }
+            if (type == typeof(Duration))
             {
-                try
-                {
-                    string query = queryBuilder.ToString();
-                    MySqlCommand cmd = new MySqlCommand(query, Connector);
+                queryBuilder.Append("INSERT INTO duration VALUES ");
 
-                    result = cmd.ExecuteNonQuery();
-                }
-                catch (Exception ex)
+                foreach (Duration duration in list)
                 {
-                    MessageBox.Show(ex.Message);
+                    queryBuilder.Append("(" + duration.Id + ", '" + duration.Description + "'),");
+                }
+                queryBuilder = queryBuilder.Remove(queryBuilder.Length - 1, 1);
+
+                if (OpenConnection())
+                {
+                    try
+                    {
+                        string query = queryBuilder.ToString();
+                        MySqlCommand cmd = new MySqlCommand(query, Connector);
+
+                        result = cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
             }
+            if (type == typeof(Book))
+            {
+                queryBuilder.Append("INSERT INTO book VALUES ");
 
+                foreach (Book book in list)
+                {
+                    queryBuilder.Append("(" + book.Id + ", '" + book.Title.Replace("'", "''") + "', '" + book.Description + "'),");
+                }
+                queryBuilder = queryBuilder.Remove(queryBuilder.Length - 1, 1);
+
+                if (OpenConnection())
+                {
+                    try
+                    {
+                        string query = queryBuilder.ToString();
+                        MySqlCommand cmd = new MySqlCommand(query, Connector);
+
+                        result = cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+            }
             return result > 0;
         }
-
         #endregion
+#endregion
     }
 }

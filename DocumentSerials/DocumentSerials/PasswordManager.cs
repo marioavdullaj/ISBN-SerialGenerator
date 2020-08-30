@@ -14,7 +14,7 @@ using System.Drawing;
 using System.Timers;
 using System.Runtime.CompilerServices;
 using System.ComponentModel;
-using System.Threading;
+using DocumentSerials.Models;
 
 namespace DocumentSerials
 {
@@ -25,8 +25,7 @@ namespace DocumentSerials
         private ServerDatabase db;
         private System.Windows.Forms.Timer timer;
 
-        private Dictionary<string, List<Tuple<string, int>>> Passwords { get; set; }
-        private List<Book> books;
+        private List<Code> Passwords { get; set; }
         private Dictionary<string, int> ActualRow { get; set; }
         public PasswordManager()
         {
@@ -57,27 +56,31 @@ namespace DocumentSerials
             sc = new SerialCode();
             stopWatch = new Stopwatch();
             db = new ServerDatabase();
-            Passwords = new Dictionary<string, List<Tuple<string, int>>>() { };
+            Passwords = new List<Code>();
             ActualRow = new Dictionary<string, int>() { };
-            books = new List<Book>();
         }
 
         private void InitUI()
         {
-
-            // initialize combobox
-            for (int i = 1; i <= 36; i++)
+            List<Book> books = db.GetBooks();
+            List<Duration> durations = db.GetDurations();
+            List<Country> countries = db.GetCountries();
+            // initialize duration combobox
+            foreach (var duration in durations)
             {
-                comboBox1.Items.Add(i + " Months");
+                comboBox1.Items.Add(duration.Description);
             }
-            comboBox1.SelectedIndex = 0;
-
             // initialize book combobox
-            books = db.GetBooks();
             foreach (var book in books)
             {
                 bookComboBox.Items.Add(book.Title);
             }
+            // initialize country combobox
+            foreach (var country in countries)
+            {
+                countryCombo.Items.Add(country.Name);
+            }
+
 
             totalCountTextBox.Text = db.Count().ToString() + " codes generated";
         }
@@ -85,7 +88,19 @@ namespace DocumentSerials
         private void generateButton_Click(object sender, EventArgs e)
         {
             string title = bookComboBox.Text;
-            int duration = comboBox1.SelectedIndex + 1;
+            string duration = comboBox1.Text.ToString();
+            string country = countryCombo.Text.ToString();
+
+            if (String.IsNullOrEmpty(duration))
+            {
+                MessageBox.Show("You must select a duration");
+                return;
+            }
+            if (String.IsNullOrEmpty(country))
+            {
+                MessageBox.Show("You must select a country");
+                return;
+            }
 
             if (String.IsNullOrEmpty(title))
             {
@@ -150,10 +165,10 @@ namespace DocumentSerials
             sc.NumBlocks = numOfBlocks;
             sc.Size = codeSize;
 
-            generatePasswords(title, duration, numberOfPasswords);
+            generatePasswords(title, duration, country, numberOfPasswords);
         }
 
-        private void generatePasswords(string doc, int duration, int n)
+        private void generatePasswords(string doc, string duration, string country, int n)
         {
 
             stopWatch.Start();
@@ -176,8 +191,6 @@ namespace DocumentSerials
 
             dataGridView1.UseWaitCursor = true;
 
-            if (!Passwords.ContainsKey(doc))
-                Passwords.Add(doc, new List<Tuple<string, int>>());
             if (!ActualRow.ContainsKey(doc))
                 ActualRow.Add(doc, 0);
 
@@ -188,7 +201,7 @@ namespace DocumentSerials
             for (i = actual_row + 1; i <= actual_row + n; i++)
             {
                 psw = sc.Generate(doc, duration, i);
-                Passwords[doc].Add(new Tuple<string, int>(psw, duration));
+                Passwords.Add(new Code(psw, country, doc, duration));
                 // Update gridview
                 DataRow dr = dt.NewRow();
                 dr[0] = i.ToString();
@@ -215,7 +228,7 @@ namespace DocumentSerials
             if (dialogResult == DialogResult.Yes)
             {
 
-                bool res = db.Insert(Passwords);
+                bool res = db.InsertCode(Passwords);
                 if (res)
                 {
                     MessageBox.Show("Serial codes inserted correctly");

@@ -1,10 +1,12 @@
-﻿using System;
+﻿using DocumentSerials.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -61,6 +63,31 @@ namespace DocumentSerials
                 }
                 textBox1.Text = "BOOKS XML LOADED";
             }
+
+            if (xml.Name.LocalName.Equals("countries"))
+            {
+                IEnumerable<XElement> nodes = xml.Descendants().Where(x => x.Attribute("iso") != null);
+                foreach (var node in nodes)
+                {
+                    string iso = node.Attribute("iso").Value;
+                    string code = node.Attribute("code").Value;
+                    string name = node.Value;
+                    ret.Add(new Country(Convert.ToInt32(iso), code, name));
+                }
+                textBox1.Text = "COUNTRIES XML LOADED";
+            }
+
+            if (xml.Name.LocalName.Equals("durations"))
+            {
+                IEnumerable<XElement> nodes = xml.Descendants().Where(x => x.Attribute("id") != null);
+                foreach (var node in nodes)
+                {
+                    string id = node.Attribute("id").Value;
+                    string description = node.Value;
+                    ret.Add(new Duration(Convert.ToInt32(id), description));
+                }
+                textBox1.Text = "DURATIONS XML LOADED";
+            }
             return ret;
         }
 
@@ -69,15 +96,14 @@ namespace DocumentSerials
             if(XmlContent.Count > 0)
             {
                 Type type = XmlContent[0].GetType();
-                if(type == typeof(Book))
+                string obj = type.Name;
+                if(connection.InsertXML(XmlContent, type))
                 {
-                    List<Book> l = XmlContent.Cast<Book>().ToList();
-                    if (connection.InsertBooks(l))
-                    {
-                        MessageBox.Show("Books correctly inserted into the DB");
-                    }
-                    else
-                        MessageBox.Show("Error during the insertion: you have already uploaded these books into the DB");
+                    MessageBox.Show(obj + " list correctly inserted into DB");
+                }
+                else
+                {
+                    MessageBox.Show("Error: The " + obj + " list has already been imported into the DB");
                 }
             }
         }

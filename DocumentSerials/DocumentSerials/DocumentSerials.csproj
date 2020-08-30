@@ -106,6 +106,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Book.cs" />
+    <Compile Include="Models\Code.cs" />
+    <Compile Include="Models\Duration.cs" />
+    <Compile Include="Models\Country.cs" />
     <Compile Include="xml_importer.cs">
       <SubType>Form</SubType>
     </Compile>

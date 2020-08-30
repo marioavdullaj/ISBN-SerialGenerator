@@ -88,7 +88,7 @@ namespace DocumentSerials
             return Encoding.UTF8.GetString(code).Substring(0, Size);
         }
 
-        public string Generate(string document, int duration, int sequenceNumber)
+        public string Generate(string document, string duration, int sequenceNumber)
         {
             this.checkDocument(document);
 

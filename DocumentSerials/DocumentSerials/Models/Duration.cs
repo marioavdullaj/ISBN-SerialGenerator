@@ -6,17 +6,14 @@ using System.Threading.Tasks;
 
 namespace DocumentSerials.Models
 {
-    class Book
+    class Duration
     {
         public int Id { get; set; }
-        public string Title { get; set; }
         public string Description { get; set; }
-
-        public Book(int id, string title, string description)
+        
+        public Duration(int id, string description)
         {
-            Id = id;
-            Title = title;
-            Description = description;
+            Id = id; Description = description;
         }
     }
 }

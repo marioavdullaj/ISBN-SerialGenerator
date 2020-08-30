@@ -70,6 +70,8 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.countryCombo = new System.Windows.Forms.ComboBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -174,7 +176,7 @@
             this.panel2.Location = new System.Drawing.Point(0, 128);
             this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(699, 668);
+            this.panel2.Size = new System.Drawing.Size(699, 703);
             this.panel2.TabIndex = 3;
             // 
             // tabControl1
@@ -185,7 +187,7 @@
             this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(699, 668);
+            this.tabControl1.Size = new System.Drawing.Size(699, 703);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -197,7 +199,7 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage1.Size = new System.Drawing.Size(691, 639);
+            this.tabPage1.Size = new System.Drawing.Size(691, 674);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Generate";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -213,10 +215,10 @@
             this.panel5.Controls.Add(this.button1);
             this.panel5.Controls.Add(this.clearAllButton);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel5.Location = new System.Drawing.Point(3, 546);
+            this.panel5.Location = new System.Drawing.Point(3, 586);
             this.panel5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(685, 91);
+            this.panel5.Size = new System.Drawing.Size(685, 86);
             this.panel5.TabIndex = 7;
             // 
             // percLabel
@@ -297,7 +299,7 @@
             // 
             this.panel4.Controls.Add(this.dataGridView1);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel4.Location = new System.Drawing.Point(3, 145);
+            this.panel4.Location = new System.Drawing.Point(3, 185);
             this.panel4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(685, 401);
@@ -365,6 +367,8 @@
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.panel3.Controls.Add(this.countryCombo);
+            this.panel3.Controls.Add(this.label13);
             this.panel3.Controls.Add(this.totalCountTextBox);
             this.panel3.Controls.Add(this.label8);
             this.panel3.Controls.Add(this.countTextBox);
@@ -383,13 +387,13 @@
             this.panel3.Location = new System.Drawing.Point(3, 2);
             this.panel3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(685, 143);
+            this.panel3.Size = new System.Drawing.Size(685, 183);
             this.panel3.TabIndex = 5;
             // 
             // totalCountTextBox
             // 
             this.totalCountTextBox.Enabled = false;
-            this.totalCountTextBox.Location = new System.Drawing.Point(207, 103);
+            this.totalCountTextBox.Location = new System.Drawing.Point(207, 146);
             this.totalCountTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.totalCountTextBox.Name = "totalCountTextBox";
             this.totalCountTextBox.Size = new System.Drawing.Size(251, 22);
@@ -399,7 +403,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(3, 106);
+            this.label8.Location = new System.Drawing.Point(3, 149);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(193, 20);
@@ -410,10 +414,10 @@
             // countTextBox
             // 
             this.countTextBox.Enabled = false;
-            this.countTextBox.Location = new System.Drawing.Point(483, 7);
+            this.countTextBox.Location = new System.Drawing.Point(488, 7);
             this.countTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.countTextBox.Name = "countTextBox";
-            this.countTextBox.Size = new System.Drawing.Size(192, 22);
+            this.countTextBox.Size = new System.Drawing.Size(191, 22);
             this.countTextBox.TabIndex = 15;
             // 
             // bookComboBox
@@ -428,7 +432,7 @@
             // 
             // numBlockTextBox
             // 
-            this.numBlockTextBox.Location = new System.Drawing.Point(599, 75);
+            this.numBlockTextBox.Location = new System.Drawing.Point(600, 104);
             this.numBlockTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.numBlockTextBox.Name = "numBlockTextBox";
             this.numBlockTextBox.Size = new System.Drawing.Size(76, 22);
@@ -437,7 +441,7 @@
             // 
             // codeSizeTextBox
             // 
-            this.codeSizeTextBox.Location = new System.Drawing.Point(597, 43);
+            this.codeSizeTextBox.Location = new System.Drawing.Point(600, 59);
             this.codeSizeTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.codeSizeTextBox.Name = "codeSizeTextBox";
             this.codeSizeTextBox.Size = new System.Drawing.Size(77, 22);
@@ -447,7 +451,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(480, 79);
+            this.label5.Location = new System.Drawing.Point(485, 108);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(110, 17);
             this.label5.TabIndex = 10;
@@ -456,7 +460,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(480, 47);
+            this.label4.Location = new System.Drawing.Point(485, 60);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(113, 17);
             this.label4.TabIndex = 9;
@@ -484,7 +488,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(483, 111);
+            this.label3.Location = new System.Drawing.Point(485, 149);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(113, 17);
             this.label3.TabIndex = 4;
@@ -502,7 +506,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(599, 108);
+            this.textBox1.Location = new System.Drawing.Point(600, 146);
             this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(76, 22);
@@ -518,11 +522,30 @@
             this.label6.TabIndex = 14;
             this.label6.Text = "# codes generated";
             // 
+            // countryCombo
+            // 
+            this.countryCombo.FormattingEnabled = true;
+            this.countryCombo.Location = new System.Drawing.Point(207, 104);
+            this.countryCombo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.countryCombo.Name = "countryCombo";
+            this.countryCombo.Size = new System.Drawing.Size(251, 24);
+            this.countryCombo.TabIndex = 19;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(3, 106);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(251, 25);
+            this.label13.TabIndex = 18;
+            this.label13.Text = "Country                 -->";
+            // 
             // PasswordManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(699, 796);
+            this.ClientSize = new System.Drawing.Size(699, 831);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -592,6 +615,8 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox totalCountTextBox;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ComboBox countryCombo;
+        private System.Windows.Forms.Label label13;
     }
 }
 
