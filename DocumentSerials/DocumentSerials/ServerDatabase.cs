@@ -23,7 +23,7 @@ namespace DocumentSerials
         private int port = Convert.ToInt32(ConfigurationManager.AppSettings["port"]);
         private string user = ConfigurationManager.AppSettings["user"];
         private string password = ConfigurationManager.AppSettings["password"];
-        private string User { get; set; }
+        private string appuser = ConfigurationManager.AppSettings["appuser"];
 
         public ServerDatabase()
         {
@@ -31,7 +31,6 @@ namespace DocumentSerials
                                 "; Database=" + db_name + "; Uid=" + user + "; Pwd=" + password + "; pooling = true;";
             Connector = new MySqlConnection(ConnectionString);
             md5 = MD5.Create();
-            User = "steinhauer";
         }
 
         public bool OpenConnection()
@@ -268,7 +267,7 @@ namespace DocumentSerials
                 int bookid = GetBookId(book);
                 int countryid = GetCountryIso(country);
 
-                query += "(" + bookid.ToString() + ", " + count.ToString() + ", " + countryid.ToString() + ", '" + creation_code.ToString() + "', '" + datenow.ToString() + "', '" + User + "');";
+                query += "(" + bookid.ToString() + ", " + count.ToString() + ", " + countryid.ToString() + ", '" + creation_code.ToString() + "', '" + datenow.ToString() + "', '" + appuser + "');";
 
                 if (OpenConnection())
                 {

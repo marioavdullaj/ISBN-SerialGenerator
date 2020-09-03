@@ -15,6 +15,7 @@ using System.Timers;
 using System.Runtime.CompilerServices;
 using System.ComponentModel;
 using DocumentSerials.Models;
+using System.Configuration;
 
 namespace DocumentSerials
 {
@@ -83,6 +84,14 @@ namespace DocumentSerials
 
 
             totalCountTextBox.Text = db.Count().ToString() + " codes generated";
+
+            // Settings tab
+             txtServer.Text = ConfigurationManager.AppSettings["server"];
+             txtDbName.Text = ConfigurationManager.AppSettings["db_name"];
+             txtPort.Text   = ConfigurationManager.AppSettings["port"];
+             txtDbUser.Text = ConfigurationManager.AppSettings["user"];
+             txtDbPassword.Text = ConfigurationManager.AppSettings["password"];
+             txtAppUser.Text = ConfigurationManager.AppSettings["appuser"];
         }
 
         private void generateButton_Click(object sender, EventArgs e)
@@ -358,6 +367,29 @@ namespace DocumentSerials
         {
             xml_importer page = new xml_importer();
             page.ShowDialog();
+        }
+
+        private async void btnSaveSettins_Click(object sender, EventArgs e)
+        {
+            ConfigurationManager.AppSettings["server"] = txtServer.Text;
+            ConfigurationManager.AppSettings["db_name"] = txtDbName.Text;
+            ConfigurationManager.AppSettings["port"] = txtPort.Text;
+            ConfigurationManager.AppSettings["user"] = txtDbUser.Text;
+            ConfigurationManager.AppSettings["password"] = txtDbPassword.Text;
+            ConfigurationManager.AppSettings["appuser"] = txtAppUser.Text;
+
+            db = new ServerDatabase();
+            await OpenConnection();
+        }
+
+        private void btnCancelSettings_Click(object sender, EventArgs e)
+        {
+            txtServer.Text = ConfigurationManager.AppSettings["server"];
+            txtDbName.Text = ConfigurationManager.AppSettings["db_name"];
+            txtPort.Text = ConfigurationManager.AppSettings["port"];
+            txtDbUser.Text = ConfigurationManager.AppSettings["user"];
+            txtDbPassword.Text = ConfigurationManager.AppSettings["password"];
+            txtAppUser.Text = ConfigurationManager.AppSettings["appuser"];
         }
     }
 }

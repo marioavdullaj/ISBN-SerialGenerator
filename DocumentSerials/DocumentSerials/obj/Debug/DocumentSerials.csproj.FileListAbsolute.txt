@@ -75,3 +75,7 @@ C:\Users\user\Source\Repos\ISBN-SerialGenerator\DocumentSerials\DocumentSerials\
 C:\Users\user\Source\Repos\ISBN-SerialGenerator\DocumentSerials\DocumentSerials\bin\Debug\System.Data.HashFunction.Interfaces.xml
 C:\Users\user\Source\Repos\ISBN-SerialGenerator\DocumentSerials\DocumentSerials\bin\Debug\System.ValueTuple.xml
 C:\Users\user\Source\Repos\ISBN-SerialGenerator\DocumentSerials\DocumentSerials\obj\Debug\DocumentSerials.xml_importer.resources
+C:\Users\user\Source\Repos\ISBN-SerialGenerator\DocumentSerials\DocumentSerials\bin\Debug\DocumentSerials.exe.manifest
+C:\Users\user\Source\Repos\ISBN-SerialGenerator\DocumentSerials\DocumentSerials\bin\Debug\DocumentSerials.application
+C:\Users\user\Source\Repos\ISBN-SerialGenerator\DocumentSerials\DocumentSerials\obj\Debug\DocumentSerials.exe.manifest
+C:\Users\user\Source\Repos\ISBN-SerialGenerator\DocumentSerials\DocumentSerials\obj\Debug\DocumentSerials.application
