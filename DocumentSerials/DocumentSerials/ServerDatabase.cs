@@ -23,6 +23,7 @@ namespace DocumentSerials
         private int port = Convert.ToInt32(ConfigurationManager.AppSettings["port"]);
         private string user = ConfigurationManager.AppSettings["user"];
         private string password = ConfigurationManager.AppSettings["password"];
+        private string User { get; set; }
 
         public ServerDatabase()
         {
@@ -30,6 +31,7 @@ namespace DocumentSerials
                                 "; Database=" + db_name + "; Uid=" + user + "; Pwd=" + password + "; pooling = true;";
             Connector = new MySqlConnection(ConnectionString);
             md5 = MD5.Create();
+            User = "steinhauer";
         }
 
         public bool OpenConnection()
@@ -216,9 +218,10 @@ namespace DocumentSerials
             return Count;
         }
 
-        public bool InsertCode(List<Code> codes)
+        public String InsertCode(List<Code> codes)
         {
             int result = -1;
+            String creation_code = Guid.NewGuid().ToString();
             StringBuilder queryBuilder = new StringBuilder();
 
             queryBuilder.Append("INSERT INTO activation_codes (actcode, country, bookid, creation_date, creation_code) VALUES ");
@@ -230,12 +233,8 @@ namespace DocumentSerials
                 int countryIso = GetCountryIso(code.Country);
                 string datenow = DateTime.Now.ToString("yyyy-MM-dd");
                 int bookid = GetBookId(code.Book);
-                // MD5 creation_code from datetime now
-                byte[] creation_code = md5.ComputeHash(Encoding.ASCII.GetBytes(datenow));
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < creation_code.Length; i++) sb.Append(creation_code[i].ToString("X2"));
                 // append the values to be inserted
-                queryBuilder.Append("('" + psw + "', " + countryIso + ", "+ bookid+", '"+ datenow + "','"+sb.ToString()+"'),");
+                queryBuilder.Append("('" + psw + "', " + countryIso + ", "+ bookid+", '"+ datenow + "','"+creation_code+"'),");
             }
             queryBuilder = queryBuilder.Remove(queryBuilder.Length - 1, 1);
 
@@ -247,6 +246,8 @@ namespace DocumentSerials
                     MySqlCommand cmd = new MySqlCommand(query, Connector);
 
                     result = cmd.ExecuteNonQuery();
+                    if (result <= 0)
+                        creation_code = String.Empty;
                 }
                 catch(Exception ex)
                 {
@@ -254,6 +255,39 @@ namespace DocumentSerials
                 }
             }
 
+            return creation_code;
+        }
+
+        public bool InsertJob(String book, String country, int count, String creation_code)
+        {
+            int result = -1;
+            try
+            {
+                String query = "INSERT INTO jobs (bookid, count, countryid, creation_code, creation_date, user) VALUES ";
+                string datenow = DateTime.Now.ToString("yyyy-MM-dd");
+                int bookid = GetBookId(book);
+                int countryid = GetCountryIso(country);
+
+                query += "(" + bookid.ToString() + ", " + count.ToString() + ", " + countryid.ToString() + ", '" + creation_code.ToString() + "', '" + datenow.ToString() + "', '" + User + "');";
+
+                if (OpenConnection())
+                {
+                    try
+                    {
+                        MySqlCommand cmd = new MySqlCommand(query, Connector);
+
+                        result = cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
             return result > 0;
         }
         #region XML_UPLOAD

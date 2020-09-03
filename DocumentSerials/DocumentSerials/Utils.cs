@@ -79,13 +79,19 @@ namespace DocumentSerials
             StringBuilder hash1String = new StringBuilder();
             StringBuilder hash2String = new StringBuilder();
             // Convert the hash byte arrays into hexadecimal strings
+            
             for (int i = 0; i < hash1.Length; i++)
                 hash1String.Append(hash1[i].ToString("X2"));
             for (int i = 0; i < hash2.Length; i++)
                 hash2String.Append(hash2[i].ToString("X2"));
+
+            int half = Convert.ToInt32(Size / 2);
+            String code = hash1String.ToString().Substring(0, half) + hash2String.ToString().Substring(half, half);
+            return code;
             // Random shuffle of the concatenation of the two hashes
-            byte[] code = Shuffle(Encoding.UTF8.GetBytes(hash1String.ToString() + hash2String.ToString()));
-            return Encoding.UTF8.GetString(code).Substring(0, Size);
+            //byte[] code = Shuffle(Encoding.UTF8.GetBytes(hash1String.ToString() + hash2String.ToString()));
+            //return Encoding.UTF8.GetString(code).Substring(0, Size);
+            //return (hash1String.ToString() + hash2String.ToString());
         }
 
         public string Generate(string document, string duration, int sequenceNumber)

@@ -227,20 +227,22 @@ namespace DocumentSerials
             DialogResult dialogResult = MessageBox.Show("Insert into the database?", "DB Conneciton", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-
-                bool res = db.InsertCode(Passwords);
-                if (res)
+                String creation_code = db.InsertCode(Passwords);
+                if(!String.IsNullOrEmpty(creation_code))
                 {
-                    MessageBox.Show("Serial codes inserted correctly");
-                    // Clear the passwords
-                    Passwords.Clear();
-                    string title = bookComboBox.Text;
-                    // And update the total number of codes generated for the book
-                    countTextBox.Text = db.Count(title).ToString() + " codes generated";
-                    totalCountTextBox.Text = db.Count().ToString() + " codes generated";
+                    if (db.InsertJob(doc, country, n, creation_code))
+                    {
+                        MessageBox.Show("Serial codes inserted correctly");
+                        // Clear the passwords
+                        Passwords.Clear();
+                        string title = bookComboBox.Text;
+                        // And update the total number of codes generated for the book
+                        countTextBox.Text = db.Count(title).ToString() + " codes generated";
+                        totalCountTextBox.Text = db.Count().ToString() + " codes generated";
+                    }
+                    else
+                        MessageBox.Show("Error during the insertion of the serial codes");
                 }
-                else
-                    MessageBox.Show("Error during the insertion of the serial codes");
             }
             else if (dialogResult == DialogResult.No)
             {
