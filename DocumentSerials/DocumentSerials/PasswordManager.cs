@@ -53,6 +53,13 @@ namespace DocumentSerials
         {
             InitializeComponent();
 
+            // Settings tab
+            txtServer.Text = Settings.ReadSetting("server");
+            txtDbName.Text = Settings.ReadSetting("db_name");
+            txtPort.Text = Settings.ReadSetting("port");
+            txtDbUser.Text = Settings.ReadSetting("user");
+            txtDbPassword.Text = Settings.ReadSetting("password");
+            txtAppUser.Text = Settings.ReadSetting("appuser");
             // Initialize private components
             sc = new SerialCode();
             stopWatch = new Stopwatch();
@@ -84,14 +91,6 @@ namespace DocumentSerials
 
 
             totalCountTextBox.Text = db.Count().ToString() + " codes generated";
-
-            // Settings tab
-             txtServer.Text = ConfigurationManager.AppSettings["server"];
-             txtDbName.Text = ConfigurationManager.AppSettings["db_name"];
-             txtPort.Text   = ConfigurationManager.AppSettings["port"];
-             txtDbUser.Text = ConfigurationManager.AppSettings["user"];
-             txtDbPassword.Text = ConfigurationManager.AppSettings["password"];
-             txtAppUser.Text = ConfigurationManager.AppSettings["appuser"];
         }
 
         private void generateButton_Click(object sender, EventArgs e)
@@ -371,12 +370,12 @@ namespace DocumentSerials
 
         private async void btnSaveSettins_Click(object sender, EventArgs e)
         {
-            ConfigurationManager.AppSettings["server"] = txtServer.Text;
-            ConfigurationManager.AppSettings["db_name"] = txtDbName.Text;
-            ConfigurationManager.AppSettings["port"] = txtPort.Text;
-            ConfigurationManager.AppSettings["user"] = txtDbUser.Text;
-            ConfigurationManager.AppSettings["password"] = txtDbPassword.Text;
-            ConfigurationManager.AppSettings["appuser"] = txtAppUser.Text;
+            Settings.AddUpdateAppSettings("server", txtServer.Text);
+            Settings.AddUpdateAppSettings("db_name", txtDbName.Text);
+            Settings.AddUpdateAppSettings("port", txtPort.Text);
+            Settings.AddUpdateAppSettings("user", txtDbUser.Text);
+            Settings.AddUpdateAppSettings("password", txtDbPassword.Text);
+            Settings.AddUpdateAppSettings("appuser", txtAppUser.Text);
 
             db = new ServerDatabase();
             await OpenConnection();
@@ -384,12 +383,13 @@ namespace DocumentSerials
 
         private void btnCancelSettings_Click(object sender, EventArgs e)
         {
-            txtServer.Text = ConfigurationManager.AppSettings["server"];
-            txtDbName.Text = ConfigurationManager.AppSettings["db_name"];
-            txtPort.Text = ConfigurationManager.AppSettings["port"];
-            txtDbUser.Text = ConfigurationManager.AppSettings["user"];
-            txtDbPassword.Text = ConfigurationManager.AppSettings["password"];
-            txtAppUser.Text = ConfigurationManager.AppSettings["appuser"];
+            // Settings tab
+            txtServer.Text = Settings.ReadSetting("server");
+            txtDbName.Text = Settings.ReadSetting("db_name");
+            txtPort.Text = Settings.ReadSetting("port");
+            txtDbUser.Text = Settings.ReadSetting("user");
+            txtDbPassword.Text = Settings.ReadSetting("password");
+            txtAppUser.Text = Settings.ReadSetting("appuser");
         }
     }
 }

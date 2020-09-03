@@ -70,23 +70,23 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnCancelSettings = new System.Windows.Forms.Button();
+            this.btnSaveSettins = new System.Windows.Forms.Button();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.txtServer = new System.Windows.Forms.TextBox();
+            this.txtDbName = new System.Windows.Forms.TextBox();
+            this.txtAppUser = new System.Windows.Forms.TextBox();
+            this.txtDbPassword = new System.Windows.Forms.TextBox();
+            this.txtDbUser = new System.Windows.Forms.TextBox();
+            this.txtPort = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.txtPort = new System.Windows.Forms.TextBox();
-            this.txtDbUser = new System.Windows.Forms.TextBox();
-            this.txtDbPassword = new System.Windows.Forms.TextBox();
-            this.txtAppUser = new System.Windows.Forms.TextBox();
-            this.txtDbName = new System.Windows.Forms.TextBox();
-            this.txtServer = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.btnSaveSettins = new System.Windows.Forms.Button();
-            this.btnCancelSettings = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -95,8 +95,8 @@
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // contextMenuStrip1
@@ -549,15 +549,6 @@
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = "0";
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(365, 11);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(97, 13);
-            this.label6.TabIndex = 14;
-            this.label6.Text = "# codes generated";
-            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.btnCancelSettings);
@@ -582,101 +573,15 @@
             this.tabPage2.Text = "Settings";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // txtPort
+            // btnCancelSettings
             // 
-            this.txtPort.Location = new System.Drawing.Point(267, 61);
-            this.txtPort.Name = "txtPort";
-            this.txtPort.Size = new System.Drawing.Size(100, 22);
-            this.txtPort.TabIndex = 0;
-            // 
-            // txtDbUser
-            // 
-            this.txtDbUser.Location = new System.Drawing.Point(267, 138);
-            this.txtDbUser.Name = "txtDbUser";
-            this.txtDbUser.Size = new System.Drawing.Size(416, 22);
-            this.txtDbUser.TabIndex = 1;
-            // 
-            // txtDbPassword
-            // 
-            this.txtDbPassword.Location = new System.Drawing.Point(267, 174);
-            this.txtDbPassword.Name = "txtDbPassword";
-            this.txtDbPassword.Size = new System.Drawing.Size(416, 22);
-            this.txtDbPassword.TabIndex = 2;
-            // 
-            // txtAppUser
-            // 
-            this.txtAppUser.Location = new System.Drawing.Point(267, 225);
-            this.txtAppUser.Name = "txtAppUser";
-            this.txtAppUser.Size = new System.Drawing.Size(416, 22);
-            this.txtAppUser.TabIndex = 3;
-            // 
-            // txtDbName
-            // 
-            this.txtDbName.Location = new System.Drawing.Point(267, 98);
-            this.txtDbName.Name = "txtDbName";
-            this.txtDbName.Size = new System.Drawing.Size(416, 22);
-            this.txtDbName.TabIndex = 4;
-            // 
-            // txtServer
-            // 
-            this.txtServer.Location = new System.Drawing.Point(267, 25);
-            this.txtServer.Name = "txtServer";
-            this.txtServer.Size = new System.Drawing.Size(416, 22);
-            this.txtServer.TabIndex = 5;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(27, 28);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(50, 17);
-            this.label15.TabIndex = 6;
-            this.label15.Text = "Server";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(27, 141);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(58, 17);
-            this.label16.TabIndex = 7;
-            this.label16.Text = "Db user";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(27, 103);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(65, 17);
-            this.label17.TabIndex = 8;
-            this.label17.Text = "Db name";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(27, 228);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(65, 17);
-            this.label18.TabIndex = 9;
-            this.label18.Text = "App user";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(27, 177);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(90, 17);
-            this.label19.TabIndex = 10;
-            this.label19.Text = "Db password";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(27, 66);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(34, 17);
-            this.label20.TabIndex = 11;
-            this.label20.Text = "Port";
+            this.btnCancelSettings.Location = new System.Drawing.Point(413, 618);
+            this.btnCancelSettings.Name = "btnCancelSettings";
+            this.btnCancelSettings.Size = new System.Drawing.Size(133, 48);
+            this.btnCancelSettings.TabIndex = 13;
+            this.btnCancelSettings.Text = "Revert";
+            this.btnCancelSettings.UseVisualStyleBackColor = true;
+            this.btnCancelSettings.Click += new System.EventHandler(this.btnCancelSettings_Click);
             // 
             // btnSaveSettins
             // 
@@ -688,15 +593,110 @@
             this.btnSaveSettins.UseVisualStyleBackColor = true;
             this.btnSaveSettins.Click += new System.EventHandler(this.btnSaveSettins_Click);
             // 
-            // btnCancelSettings
+            // label20
             // 
-            this.btnCancelSettings.Location = new System.Drawing.Point(413, 618);
-            this.btnCancelSettings.Name = "btnCancelSettings";
-            this.btnCancelSettings.Size = new System.Drawing.Size(133, 48);
-            this.btnCancelSettings.TabIndex = 13;
-            this.btnCancelSettings.Text = "Revert";
-            this.btnCancelSettings.UseVisualStyleBackColor = true;
-            this.btnCancelSettings.Click += new System.EventHandler(this.btnCancelSettings_Click);
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(27, 66);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(34, 17);
+            this.label20.TabIndex = 11;
+            this.label20.Text = "Port";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(27, 180);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(90, 17);
+            this.label19.TabIndex = 10;
+            this.label19.Text = "Db password";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(27, 217);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(65, 17);
+            this.label18.TabIndex = 9;
+            this.label18.Text = "App user";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(27, 106);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(65, 17);
+            this.label17.TabIndex = 8;
+            this.label17.Text = "Db name";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(27, 144);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(58, 17);
+            this.label16.TabIndex = 7;
+            this.label16.Text = "Db user";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(27, 28);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(50, 17);
+            this.label15.TabIndex = 6;
+            this.label15.Text = "Server";
+            // 
+            // txtServer
+            // 
+            this.txtServer.Location = new System.Drawing.Point(130, 25);
+            this.txtServer.Name = "txtServer";
+            this.txtServer.Size = new System.Drawing.Size(416, 22);
+            this.txtServer.TabIndex = 5;
+            // 
+            // txtDbName
+            // 
+            this.txtDbName.Location = new System.Drawing.Point(130, 103);
+            this.txtDbName.Name = "txtDbName";
+            this.txtDbName.Size = new System.Drawing.Size(416, 22);
+            this.txtDbName.TabIndex = 4;
+            // 
+            // txtAppUser
+            // 
+            this.txtAppUser.Location = new System.Drawing.Point(130, 214);
+            this.txtAppUser.Name = "txtAppUser";
+            this.txtAppUser.Size = new System.Drawing.Size(416, 22);
+            this.txtAppUser.TabIndex = 3;
+            // 
+            // txtDbPassword
+            // 
+            this.txtDbPassword.Location = new System.Drawing.Point(130, 177);
+            this.txtDbPassword.Name = "txtDbPassword";
+            this.txtDbPassword.Size = new System.Drawing.Size(416, 22);
+            this.txtDbPassword.TabIndex = 2;
+            // 
+            // txtDbUser
+            // 
+            this.txtDbUser.Location = new System.Drawing.Point(130, 141);
+            this.txtDbUser.Name = "txtDbUser";
+            this.txtDbUser.Size = new System.Drawing.Size(416, 22);
+            this.txtDbUser.TabIndex = 1;
+            // 
+            // txtPort
+            // 
+            this.txtPort.Location = new System.Drawing.Point(130, 63);
+            this.txtPort.Name = "txtPort";
+            this.txtPort.Size = new System.Drawing.Size(100, 22);
+            this.txtPort.TabIndex = 0;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(365, 11);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(97, 13);
+            this.label6.TabIndex = 14;
+            this.label6.Text = "# codes generated";
             // 
             // PasswordManager
             // 
@@ -724,9 +724,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
 
         }

@@ -17,13 +17,13 @@ namespace DocumentSerials
         public MySqlConnection Connector { get; set; }
         private string ConnectionString { get; set; }
         private MD5 md5;
- 
-        private string server = ConfigurationManager.AppSettings["server"];
-        private string db_name = ConfigurationManager.AppSettings["db_name"];
-        private int port = Convert.ToInt32(ConfigurationManager.AppSettings["port"]);
-        private string user = ConfigurationManager.AppSettings["user"];
-        private string password = ConfigurationManager.AppSettings["password"];
-        private string appuser = ConfigurationManager.AppSettings["appuser"];
+
+        private string server = Settings.ReadSetting("server");
+        private string db_name = Settings.ReadSetting("database");
+        private int port = Convert.ToInt32(Settings.ReadSetting("port"));
+        private string user = Settings.ReadSetting("user");
+        private string password = Settings.ReadSetting("password");
+        private string appuser = Settings.ReadSetting("appuser");
 
         public ServerDatabase()
         {
